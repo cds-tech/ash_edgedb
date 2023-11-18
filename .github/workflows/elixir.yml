@@ -10,9 +10,9 @@ jobs:
   ash-ci:
     strategy:
       matrix:
-        postgres_version: ["10", "12", "14", "16"]
+        edgedb_version: ["10", "12", "14", "16"]
     uses: ash-project/ash/.github/workflows/ash-ci.yml@main
     with:
-      postgres: true
+      edgedb: true
     secrets:
       hex_api_key: ${{ secrets.HEX_API_KEY }}

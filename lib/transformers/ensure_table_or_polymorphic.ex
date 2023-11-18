@@ -4,8 +4,8 @@ defmodule AshEdgeDB.Transformers.EnsureTableOrPolymorphic do
   alias Spark.Dsl.Transformer
 
   def transform(dsl) do
-    if Transformer.get_option(dsl, [:postgres], :polymorphic?) ||
-         Transformer.get_option(dsl, [:postgres], :table) do
+    if Transformer.get_option(dsl, [:edgedb], :polymorphic?) ||
+         Transformer.get_option(dsl, [:edgedb], :table) do
       {:ok, dsl}
     else
       resource = Transformer.get_persisted(dsl, :module)
@@ -18,13 +18,13 @@ defmodule AshEdgeDB.Transformers.EnsureTableOrPolymorphic do
         For example:
 
         ```elixir
-        postgres do
+        edgedb do
           table "the_table"
           repo YourApp.Repo
         end
         ```
         """,
-        path: [:postgres, :table]
+        path: [:edgedb, :table]
     end
   end
 end

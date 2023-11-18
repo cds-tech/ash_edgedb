@@ -13,7 +13,7 @@ defmodule AshEdgeDB.Test.Comment do
     end
   end
 
-  postgres do
+  edgedb do
     table "comments"
     repo(AshEdgeDB.TestRepo)
 

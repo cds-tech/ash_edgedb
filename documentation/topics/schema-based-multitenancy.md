@@ -1,6 +1,6 @@
 # Schema Based Multitenancy
 
-Multitenancy in AshEdgeDB is implemented via postgres schemas. For more information on schemas, see postgres' [schema documentation](https://www.postgresql.org/docs/current/ddl-schemas.html)
+Multitenancy in AshEdgeDB is implemented via edgedb schemas. For more information on schemas, see edgedb' [schema documentation](https://www.edgedbql.org/docs/current/ddl-schemas.html)
 
 Implementing multitenancy via schema's involves tracking "tenant migrations" separately from migrations for your public schema. You can see what this looks like by simply creating a multitenant resource, and using the migration generator `mix ash_edgedb.generate_migrations --apis My.Api`. It will put schema specific migrations in `priv/repo/tenant_migrations`. When you generate migrations, you'll want to be sure to audit migrations in both directories. Additionally, when you deploy, you'll want to run your migrations, as well as running them with the migrations path `priv/repo/tenant_migrations`.
 
@@ -19,7 +19,7 @@ defmodule MyApp.Organization do
   use Ash.Resource,
     ...
 
-  postgres do
+  edgedb do
     ...
 
     manage_tenant do
@@ -31,4 +31,4 @@ end
 
 With this configuration, if you create an organization, it will create a corresponding schema, e.g. `org_10` in the database. Then it will run your tenant migrations on that schema. To override the tenant_migrations path, implement the `c:AshEdgeDB.Repo.tenant_migrations_path/0` callback.
 
-Notice that `manage_tenant` is nested inside the `postgres` block. This is because the method of managing tenants is specific to postgres, and if another data layer supported multitenancy they may or may not support managing tenants in the same way.
+Notice that `manage_tenant` is nested inside the `edgedb` block. This is because the method of managing tenants is specific to edgedb, and if another data layer supported multitenancy they may or may not support managing tenants in the same way.

@@ -12,7 +12,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
         use Ash.Resource,
           data_layer: AshEdgeDB.DataLayer
 
-        postgres do
+        edgedb do
           table "posts"
           repo(AshEdgeDB.TestRepo)
 
@@ -67,7 +67,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
       defmodule unquote(mod) do
         use Ash.Resource, data_layer: AshEdgeDB.DataLayer
 
-        postgres do
+        edgedb do
           table unquote(table)
           repo(AshEdgeDB.TestRepo)
         end
@@ -91,7 +91,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
       end)
 
       defposts do
-        postgres do
+        edgedb do
           migration_types(second_title: {:varchar, 16})
           migration_defaults(title_with_default: "\"fred\"")
         end
@@ -182,7 +182,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
       end)
 
       defposts do
-        postgres do
+        edgedb do
           migration_types(second_title: {:varchar, 16})
           schema("example")
         end
@@ -262,7 +262,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
       end)
 
       defposts do
-        postgres do
+        edgedb do
           custom_indexes do
             # need one without any opts
             index([:title], concurrently: true)
@@ -306,7 +306,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
       end)
 
       defposts do
-        postgres do
+        edgedb do
           schema("example")
         end
 
@@ -332,7 +332,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
 
     test "when renaming a field, it asks if you are renaming it, and renames it if you are" do
       defposts do
-        postgres do
+        edgedb do
           schema("example")
         end
 
@@ -394,7 +394,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
 
     test "when renaming an index, it is properly renamed" do
       defposts do
-        postgres do
+        edgedb do
           identity_index_names(title: "titles_r_unique_dawg")
         end
 
@@ -858,7 +858,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
       )
 
       defposts Post2 do
-        postgres do
+        edgedb do
           references do
             reference(:post, name: "special_post_fkey", on_delete: :delete, on_update: :update)
           end
@@ -1001,7 +1001,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
           attribute(:price, :integer)
         end
 
-        postgres do
+        edgedb do
           check_constraints do
             check_constraint(:price, "price_must_be_positive", check: "price > 0")
           end
@@ -1033,7 +1033,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
           attribute(:price, :integer)
         end
 
-        postgres do
+        edgedb do
           check_constraints do
             check_constraint(:price, "price_must_be_positive", check: "price > 1")
           end
@@ -1072,7 +1072,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
           attribute(:price, :integer)
         end
 
-        postgres do
+        edgedb do
           check_constraints do
             check_constraint(:price, "price_must_be_positive", check: "price > 0")
           end
@@ -1124,7 +1124,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
         use Ash.Resource,
           data_layer: AshEdgeDB.DataLayer
 
-        postgres do
+        edgedb do
           polymorphic?(true)
           repo(AshEdgeDB.TestRepo)
         end
@@ -1143,7 +1143,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
         use Ash.Resource,
           data_layer: AshEdgeDB.DataLayer
 
-        postgres do
+        edgedb do
           table "posts"
           repo(AshEdgeDB.TestRepo)
         end
@@ -1307,7 +1307,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
         use Ash.Resource,
           data_layer: AshEdgeDB.DataLayer
 
-        postgres do
+        edgedb do
           table "comments"
           repo AshEdgeDB.TestRepo
         end
@@ -1348,7 +1348,7 @@ defmodule AshEdgeDB.MigrationGeneratorTest do
         use Ash.Resource,
           data_layer: AshEdgeDB.DataLayer
 
-        postgres do
+        edgedb do
           table "comments"
           repo AshEdgeDB.TestRepo
         end

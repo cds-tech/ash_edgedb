@@ -32,7 +32,7 @@ Then, configure each of your `Ash.Resource` resources by adding `use Ash.Resourc
 defmodule MyApp.SomeResource do
   use Ash.Resource, data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     repo MyApp.Repo
     table "table_name"
   end

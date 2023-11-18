@@ -1,5 +1,5 @@
 defmodule AshEdgeDB.ManualRelationship do
-  @moduledoc "A behavior for postgres-specific manual relationship functionality"
+  @moduledoc "A behavior for edgedb-specific manual relationship functionality"
 
   @callback ash_edgedb_join(
               source_query :: Ecto.Query.t(),

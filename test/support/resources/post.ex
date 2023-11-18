@@ -13,7 +13,7 @@ defmodule AshEdgeDB.Test.Post do
     end
   end
 
-  postgres do
+  edgedb do
     table("posts")
     repo(AshEdgeDB.TestRepo)
     base_filter_sql("type = 'sponsored'")

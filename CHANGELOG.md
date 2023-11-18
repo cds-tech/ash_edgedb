@@ -179,7 +179,7 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 - specify @behaviour in AshEdgeDB.Type
 
-- add `value_to_postgres_default/3` and `AshEdgeDB.Type`
+- add `value_to_edgedb_default/3` and `AshEdgeDB.Type`
 
 - handle non-cast-in-type queries
 
@@ -301,7 +301,7 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 - support `string_split`
 
-- add postgres expressions guide
+- add edgedb expressions guide
 
 - add `simple_join_first_aggregates` option
 
@@ -717,7 +717,7 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 - fix lateral many to many joins
 
-- inform users about postgres incompatibility with multidimensional arrays
+- inform users about edgedb incompatibility with multidimensional arrays
 
 ## [v1.1.3](https://github.com/ash-project/ash_edgedb/compare/v1.1.2...v1.1.3) (2022-12-01)
 
@@ -985,7 +985,7 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 ### Improvements:
 
-- add default guide, and empty ash postgres guide
+- add default guide, and empty ash edgedb guide
 
 - set `update_defaults` on upsert results
 

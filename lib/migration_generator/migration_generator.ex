@@ -2855,8 +2855,8 @@ defmodule AshEdgeDB.MigrationGenerator do
 
     type = Code.ensure_compiled!(type)
 
-    if function_exported?(type, :value_to_postgres_default, 3) do
-      type.value_to_postgres_default(type, constraints, value)
+    if function_exported?(type, :value_to_edgedb_default, 3) do
+      type.value_to_edgedb_default(type, constraints, value)
     else
       :error
     end

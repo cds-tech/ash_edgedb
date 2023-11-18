@@ -15,7 +15,7 @@ defmodule AshEdgeDB.Test.ComplexCalculations.ChannelMember do
     update_timestamp(:updated_at, private?: false)
   end
 
-  postgres do
+  edgedb do
     table "complex_calculations_certifications_channel_members"
     repo(AshEdgeDB.TestRepo)
   end

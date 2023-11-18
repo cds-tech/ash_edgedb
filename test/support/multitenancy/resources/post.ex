@@ -12,14 +12,14 @@ defmodule AshEdgeDB.MultitenancyTest.Post do
     defaults([:create, :read, :update, :destroy])
   end
 
-  postgres do
+  edgedb do
     table "multitenant_posts"
     repo AshEdgeDB.TestRepo
   end
 
   multitenancy do
     # Tells the resource to use the data layer
-    # multitenancy, in this case separate postgres schemas
+    # multitenancy, in this case separate edgedb schemas
     strategy(:context)
   end
 

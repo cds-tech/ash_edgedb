@@ -3,7 +3,7 @@ defmodule AshEdgeDB.Test.Author do
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     table("authors")
     repo(AshEdgeDB.TestRepo)
   end

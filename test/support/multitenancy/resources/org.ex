@@ -16,7 +16,7 @@ defmodule AshEdgeDB.MultitenancyTest.Org do
     defaults([:create, :read, :update, :destroy])
   end
 
-  postgres do
+  edgedb do
     table "multitenant_orgs"
     repo(AshEdgeDB.TestRepo)
 

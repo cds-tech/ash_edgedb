@@ -2,7 +2,7 @@ defmodule AshEdgeDB.Migration do
   @moduledoc "Utilities for use in migrations"
 
   @doc """
-  A utility for creating postgres enums for an Ash enum type.
+  A utility for creating edgedb enums for an Ash enum type.
 
   In your migration, you can say:
 

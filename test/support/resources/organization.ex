@@ -3,7 +3,7 @@ defmodule AshEdgeDB.Test.Organization do
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     table("orgs")
     repo(AshEdgeDB.TestRepo)
   end

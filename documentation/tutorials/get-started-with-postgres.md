@@ -6,13 +6,13 @@ In this guide we will:
 
 1. Setup AshEdgeDB, which includes setting up [Ecto](https://hexdocs.pm/ecto/Ecto.html)
 2. Add AshEdgeDB to the resources created in [the Ash getting started guide](https://hexdocs.pm/ash/get-started.html)
-3. Show how the various features of AshEdgeDB can help you work quickly and cleanly against a postgres database
+3. Show how the various features of AshEdgeDB can help you work quickly and cleanly against a edgedb database
 4. Highlight some of the more advanced features you can use when using AshEdgeDB.
 5. Point you to additional resources you may need on your journey
 
 ## Things you may want to read
 
-- [Install PostgreSQL](https://www.postgresql.org/download/) (I recommend the homebrew option for mac users)
+- [Install PostgreSQL](https://www.edgedbql.org/download/) (I recommend the homebrew option for mac users)
 
 ## Requirements
 
@@ -85,8 +85,8 @@ import Config
 
 # Configure your database
 config :helpdesk, Helpdesk.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "edgedb",
+  password: "edgedb",
   hostname: "localhost",
   database: "helpdesk_dev",
   port: 5432,
@@ -124,8 +124,8 @@ import Config
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
 config :helpdesk, Helpdesk.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "edgedb",
+  password: "edgedb",
   hostname: "localhost",
   database: "helpdesk_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
@@ -149,7 +149,7 @@ And finally, add the repo to your application
 
 ### Add AshEdgeDB to our resources
 
-Now we can add the data layer to our resources. The basic configuration for a resource requires the `d:AshEdgeDB.postgres|table` and the `d:AshEdgeDB.postgres|repo`.
+Now we can add the data layer to our resources. The basic configuration for a resource requires the `d:AshEdgeDB.edgedb|table` and the `d:AshEdgeDB.edgedb|repo`.
 
 ```elixir
 # in lib/helpdesk/support/resources/ticket.ex
@@ -157,7 +157,7 @@ Now we can add the data layer to our resources. The basic configuration for a re
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     table "tickets"
     repo Helpdesk.Repo
   end
@@ -169,7 +169,7 @@ Now we can add the data layer to our resources. The basic configuration for a re
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     table "representatives"
     repo Helpdesk.Repo
   end
@@ -249,7 +249,7 @@ Helpdesk.Support.Ticket
 |> Helpdesk.Support.read!()
 ```
 
-And, naturally, now that we are storing this in postgres, this database is persisted even if we stop/start our application. The nice thing, however, is that this was the _exact_ same code that we ran against our resources when they were backed by ETS.
+And, naturally, now that we are storing this in edgedb, this database is persisted even if we stop/start our application. The nice thing, however, is that this was the _exact_ same code that we ran against our resources when they were backed by ETS.
 
 ### Aggregates
 
@@ -334,7 +334,7 @@ Helpdesk.Support.Representative
 
 ### Rich Configuration Options
 
-Take a look at the DSL documentation for more information on what you can configure. You can add check constraints, configure the behavior of foreign keys, use postgres schemas with Ash's [multitenancy](https://hexdocs.pm/ash/multitenancy.html) feature, and more!
+Take a look at the DSL documentation for more information on what you can configure. You can add check constraints, configure the behavior of foreign keys, use edgedb schemas with Ash's [multitenancy](https://hexdocs.pm/ash/multitenancy.html) feature, and more!
 
 ### What next?
 
@@ -342,6 +342,6 @@ Take a look at the DSL documentation for more information on what you can config
 
 - [Ecto's documentation](https://hexdocs.pm/ecto/Ecto.html). AshEdgeDB (and much of Ash itself) is made possible by the amazing Ecto. If you find yourself looking for escape hatches when using Ash or ways to work directly with your database, you will want to know how Ecto works. Ash and AshEdgeDB intentionally do not hide Ecto, and in fact encourages its use whenever you need an escape hatch.
 
-- [Postgres' documentation](https://www.postgresql.org/docs/). Although AshEdgeDB makes things a lot easier, you generally can't get away with not understanding the basics of postgres and SQL.
+- [Postgres' documentation](https://www.edgedbql.org/docs/). Although AshEdgeDB makes things a lot easier, you generally can't get away with not understanding the basics of edgedb and SQL.
 
 - [Ecto's Migration documentation](https://hexdocs.pm/ecto_sql/Ecto.Migration.html) read more about migrations. Even with the ash_edgedb migration generator, you will very likely need to modify your own migrations some day.

@@ -9,7 +9,7 @@ defmodule AshEdgeDB.MultitenancyTest.User do
     attribute(:org_id, :uuid)
   end
 
-  postgres do
+  edgedb do
     table "users"
     repo AshEdgeDB.TestRepo
   end
@@ -20,7 +20,7 @@ defmodule AshEdgeDB.MultitenancyTest.User do
 
   multitenancy do
     # Tells the resource to use the data layer
-    # multitenancy, in this case separate postgres schemas
+    # multitenancy, in this case separate edgedb schemas
     strategy(:attribute)
     attribute(:org_id)
     parse_attribute({__MODULE__, :parse_tenant, []})

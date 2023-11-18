@@ -24,7 +24,7 @@ defmodule AshEdgeDB.Test.Account do
     )
   end
 
-  postgres do
+  edgedb do
     table "accounts"
     repo(AshEdgeDB.TestRepo)
   end

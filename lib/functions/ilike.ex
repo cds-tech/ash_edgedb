@@ -1,6 +1,6 @@
 defmodule AshEdgeDB.Functions.ILike do
   @moduledoc """
-  Maps to the builtin postgres function `ilike`.
+  Maps to the builtin edgedb function `ilike`.
   """
 
   use Ash.Query.Function, name: :ilike

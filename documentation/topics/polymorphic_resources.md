@@ -7,7 +7,7 @@ defmodule MyApp.Reaction do
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     polymorphic? true # Without this, `table` is a required configuration
   end
 

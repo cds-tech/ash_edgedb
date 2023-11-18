@@ -42,7 +42,7 @@ defmodule AshEdgeDB.Repo do
   @callback installed_extensions() :: [String.t()]
 
   @doc """
-  Use this to inform the data layer about the oldest potential postgres version it will be run on.
+  Use this to inform the data layer about the oldest potential edgedb version it will be run on.
 
   Must be an integer greater than or equal to 13.
 
@@ -61,7 +61,7 @@ defmodule AshEdgeDB.Repo do
   @callback tenant_migrations_path() :: String.t() | nil
   @doc "The path where your migrations are stored"
   @callback migrations_path() :: String.t() | nil
-  @doc "The default prefix(postgres schema) to use when building queries"
+  @doc "The default prefix(edgedb schema) to use when building queries"
   @callback default_prefix() :: String.t()
   @doc "Allows overriding a given migration type for *all* fields, for example if you wanted to always use :timestamptz for :utc_datetime fields"
   @callback override_migration_type(atom) :: atom

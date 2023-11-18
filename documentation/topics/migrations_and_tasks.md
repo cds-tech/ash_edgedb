@@ -85,7 +85,7 @@ Tasks that need to be executed in the released application (because mix is not p
     end
   end
 
-  # only needed if you are using postgres multitenancy
+  # only needed if you are using edgedb multitenancy
   def migrate_tenants do
     load_app()
 
@@ -110,7 +110,7 @@ Tasks that need to be executed in the released application (because mix is not p
     end
   end
 
-  # only needed if you are using postgres multitenancy
+  # only needed if you are using edgedb multitenancy
   def migrate_all do
     load_app()
     migrate()
@@ -122,7 +122,7 @@ Tasks that need to be executed in the released application (because mix is not p
     {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 
-  # only needed if you are using postgres multitenancy
+  # only needed if you are using edgedb multitenancy
   def rollback_tenants(repo, version) do
     load_app()
     repo_name = repo |> Module.split() |> List.last() |> Macro.underscore()

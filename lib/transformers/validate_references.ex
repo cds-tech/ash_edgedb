@@ -11,7 +11,7 @@ defmodule AshEdgeDB.Transformers.ValidateReferences do
     |> Enum.each(fn reference ->
       unless Ash.Resource.Info.relationship(dsl, reference.relationship) do
         raise Spark.Error.DslError,
-          path: [:postgres, :references, reference.relationship],
+          path: [:edgedb, :references, reference.relationship],
           module: Transformer.get_persisted(dsl, :module),
           message:
             "Found reference configuration for relationship `#{reference.relationship}`, but no such relationship exists"

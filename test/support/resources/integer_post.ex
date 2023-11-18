@@ -3,7 +3,7 @@ defmodule AshEdgeDB.Test.IntegerPost do
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     table "integer_posts"
     repo AshEdgeDB.TestRepo
   end

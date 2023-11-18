@@ -272,7 +272,7 @@ defmodule AshEdgeDB.Sort do
     end
   end
 
-  def order_to_postgres_order(dir) do
+  def order_to_edgedb_order(dir) do
     case dir do
       :asc -> nil
       :asc_nils_last -> " ASC NULLS LAST"

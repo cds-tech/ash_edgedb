@@ -12,7 +12,7 @@ defmodule AshEdgeDB.Test.User do
     attribute(:name, :string)
   end
 
-  postgres do
+  edgedb do
     table "users"
     repo(AshEdgeDB.TestRepo)
   end

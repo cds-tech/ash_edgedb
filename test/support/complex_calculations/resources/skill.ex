@@ -31,7 +31,7 @@ defmodule AshEdgeDB.Test.ComplexCalculations.Skill do
     end
   end
 
-  postgres do
+  edgedb do
     table "complex_calculations_skills"
     repo(AshEdgeDB.TestRepo)
   end

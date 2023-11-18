@@ -22,7 +22,7 @@ defmodule AshEdgeDB.Test.PostView do
     require_primary_key?(false)
   end
 
-  postgres do
+  edgedb do
     table "post_views"
     repo AshEdgeDB.TestRepo
 

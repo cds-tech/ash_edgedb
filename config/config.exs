@@ -10,7 +10,7 @@ if Mix.env() == :dev do
     manage_mix_version?: true,
     # Instructs the tool to manage the version in your README.md
     # Pass in `true` to use `"README.md"` or a string to customize
-    manage_readme_version: ["README.md", "documentation/tutorials/get-started-with-postgres.md"],
+    manage_readme_version: ["README.md", "documentation/tutorials/get-started-with-edgedb.md"],
     version_tag_prefix: "v"
 end
 
@@ -19,23 +19,23 @@ if Mix.env() == :test do
   config :ash, :validate_api_config_inclusion?, false
 
   config :ash_edgedb, AshEdgeDB.TestRepo,
-    username: "postgres",
+    username: "edgedb",
     database: "ash_edgedb_test",
     hostname: "localhost",
     pool: Ecto.Adapters.SQL.Sandbox
 
   # sobelow_skip ["Config.Secrets"]
-  config :ash_edgedb, AshEdgeDB.TestRepo, password: "postgres"
+  config :ash_edgedb, AshEdgeDB.TestRepo, password: "edgedb"
 
   config :ash_edgedb, AshEdgeDB.TestRepo, migration_primary_key: [name: :id, type: :binary_id]
 
   config :ash_edgedb, AshEdgeDB.TestNoSandboxRepo,
-    username: "postgres",
+    username: "edgedb",
     database: "ash_edgedb_test",
     hostname: "localhost"
 
   # sobelow_skip ["Config.Secrets"]
-  config :ash_edgedb, AshEdgeDB.TestNoSandboxRepo, password: "postgres"
+  config :ash_edgedb, AshEdgeDB.TestNoSandboxRepo, password: "edgedb"
 
   config :ash_edgedb, AshEdgeDB.TestNoSandboxRepo,
     migration_primary_key: [name: :id, type: :binary_id]

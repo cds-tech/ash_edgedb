@@ -2,7 +2,7 @@ defmodule AshEdgeDB.MixProject do
   use Mix.Project
 
   @description """
-  A postgres data layer for `Ash` resources. Leverages Ecto's postgres
+  A edgedb data layer for `Ash` resources. Leverages Ecto's edgedb
   support, and delegates to a configured repo.
   """
 
@@ -114,7 +114,7 @@ defmodule AshEdgeDB.MixProject do
 
   defp docs do
     [
-      main: "get-started-with-postgres",
+      main: "get-started-with-edgedb",
       source_ref: "v#{@version}",
       logo: "logos/small-logo.png",
       extras: extras(),

@@ -5,15 +5,15 @@ defmodule AshEdgeDB.Type do
   Use this in addition to `Ash.Type`.
   """
 
-  @callback value_to_postgres_default(Ash.Type.t(), Ash.Type.constraints(), term) ::
+  @callback value_to_edgedb_default(Ash.Type.t(), Ash.Type.constraints(), term) ::
               {:ok, String.t()} | :error
 
   defmacro __using__(_) do
     quote do
       @behaviour AshEdgeDB.Type
-      def value_to_postgres_default(_, _, _), do: :error
+      def value_to_edgedb_default(_, _, _), do: :error
 
-      defoverridable value_to_postgres_default: 3
+      defoverridable value_to_edgedb_default: 3
     end
   end
 end

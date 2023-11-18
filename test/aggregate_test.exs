@@ -593,7 +593,7 @@ defmodule AshEdgeDB.AggregateTest do
         use Ash.Resource,
           data_layer: AshEdgeDB.DataLayer
 
-        postgres do
+        edgedb do
           table("profile")
           repo(AshEdgeDB.TestRepo)
         end

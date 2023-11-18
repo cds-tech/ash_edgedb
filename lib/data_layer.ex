@@ -1515,7 +1515,7 @@ defmodule AshEdgeDB.DataLayer do
       base_filter_sql =
         AshEdgeDB.DataLayer.Info.base_filter_sql(resource) ||
           raise """
-          Cannot use upserts with resources that have a base_filter without also adding `base_filter_sql` in the postgres section.
+          Cannot use upserts with resources that have a base_filter without also adding `base_filter_sql` in the edgedb section.
           """
 
       sources =

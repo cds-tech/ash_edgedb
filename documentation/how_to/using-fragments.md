@@ -1,6 +1,6 @@
 # Using Fragments
 
-Fragments allow you to use arbitrary postgres expressions in your queries. Fragments can often be an escape hatch to allow you to do things that don't have something officially supported with Ash.
+Fragments allow you to use arbitrary edgedb expressions in your queries. Fragments can often be an escape hatch to allow you to do things that don't have something officially supported with Ash.
 
 ## Examples
 

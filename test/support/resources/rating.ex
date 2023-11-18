@@ -3,7 +3,7 @@ defmodule AshEdgeDB.Test.Rating do
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     polymorphic?(true)
     repo AshEdgeDB.TestRepo
   end

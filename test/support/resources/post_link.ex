@@ -3,7 +3,7 @@ defmodule AshEdgeDB.Test.PostLink do
   use Ash.Resource,
     data_layer: AshEdgeDB.DataLayer
 
-  postgres do
+  edgedb do
     table "post_links"
     repo AshEdgeDB.TestRepo
   end
