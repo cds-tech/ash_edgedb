@@ -1,4 +1,4 @@
-defmodule AshPostgres.Join do
+defmodule AshEdgeDB.Join do
   @moduledoc false
   import Ecto.Query, only: [from: 2, subquery: 1]
 
@@ -154,13 +154,13 @@ defmodule AshPostgres.Join do
     |> Enum.map(fn path ->
       if can_inner_join?(path, filter) do
         {:inner,
-         AshPostgres.Join.relationship_path_to_relationships(
+         AshEdgeDB.Join.relationship_path_to_relationships(
            resource,
            path
          )}
       else
         {:left,
-         AshPostgres.Join.relationship_path_to_relationships(
+         AshEdgeDB.Join.relationship_path_to_relationships(
            resource,
            path
          )}
@@ -219,7 +219,7 @@ defmodule AshPostgres.Join do
 
         initial_query =
           %{
-            AshPostgres.DataLayer.resource_to_query(resource, nil)
+            AshEdgeDB.DataLayer.resource_to_query(resource, nil)
             | prefix: Map.get(root_query, :prefix)
           }
 
@@ -241,7 +241,7 @@ defmodule AshPostgres.Join do
                   )
 
                 {:ok, query} =
-                  AshPostgres.Join.join_all_relationships(query, related_filter)
+                  AshEdgeDB.Join.join_all_relationships(query, related_filter)
 
                 query
               else
@@ -291,13 +291,13 @@ defmodule AshPostgres.Join do
         from(row in query, as: ^0)
       end
 
-    query = AshPostgres.DataLayer.default_bindings(query, destination)
+    query = AshEdgeDB.DataLayer.default_bindings(query, destination)
 
     {:ok, order_by, query} =
-      AshPostgres.Sort.sort(query, sort, query.__ash_bindings__.resource, [], 0, :return)
+      AshEdgeDB.Sort.sort(query, sort, query.__ash_bindings__.resource, [], 0, :return)
 
     from(row in subquery(Ecto.Query.order_by(query, ^order_by)), [])
-    |> AshPostgres.DataLayer.default_bindings(destination)
+    |> AshEdgeDB.DataLayer.default_bindings(destination)
     |> Map.update!(:__ash_bindings__, &Map.put(&1, :current, query.__ash_bindings__.current))
   end
 
@@ -389,9 +389,9 @@ defmodule AshPostgres.Join do
             filter
           end
 
-        AshPostgres.Expr.dynamic_expr(root_query, filter, bindings, true)
+        AshEdgeDB.Expr.dynamic_expr(root_query, filter, bindings, true)
       else
-        AshPostgres.Expr.dynamic_expr(query, filter, bindings, true)
+        AshEdgeDB.Expr.dynamic_expr(query, filter, bindings, true)
       end
 
     from(row in query, where: ^dynamic)
@@ -416,9 +416,9 @@ defmodule AshPostgres.Join do
           if bindings do
             filter = Ash.Filter.move_to_relationship_path(filter, path)
 
-            AshPostgres.Expr.dynamic_expr(root_query, filter, bindings, true)
+            AshEdgeDB.Expr.dynamic_expr(root_query, filter, bindings, true)
           else
-            AshPostgres.Expr.dynamic_expr(query, filter, query.__ash_bindings__, true)
+            AshEdgeDB.Expr.dynamic_expr(query, filter, query.__ash_bindings__, true)
           end
 
         from(row in query, where: ^dynamic)
@@ -429,14 +429,14 @@ defmodule AshPostgres.Join do
     if Ash.Resource.Info.multitenancy_strategy(resource) == :context do
       %{
         join_query
-        | prefix: query.prefix || AshPostgres.DataLayer.Info.schema(resource) || "public"
+        | prefix: query.prefix || AshEdgeDB.DataLayer.Info.schema(resource) || "public"
       }
     else
       %{
         join_query
         | prefix:
-            AshPostgres.DataLayer.Info.schema(resource) ||
-              AshPostgres.DataLayer.Info.repo(resource, :mutate).config()[:default_prefix] ||
+            AshEdgeDB.DataLayer.Info.schema(resource) ||
+              AshEdgeDB.DataLayer.Info.repo(resource, :mutate).config()[:default_prefix] ||
               "public"
       }
     end
@@ -571,7 +571,7 @@ defmodule AshPostgres.Join do
 
     binding_data = %{type: kind, path: full_path, source: source}
 
-    query = AshPostgres.DataLayer.add_binding(query, binding_data)
+    query = AshEdgeDB.DataLayer.add_binding(query, binding_data)
 
     used_calculations =
       Ash.Filter.used_calculations(
@@ -582,7 +582,7 @@ defmodule AshPostgres.Join do
 
     used_aggregates =
       filter
-      |> AshPostgres.Aggregate.used_aggregates(
+      |> AshEdgeDB.Aggregate.used_aggregates(
         relationship.destination,
         used_calculations,
         full_path
@@ -644,7 +644,7 @@ defmodule AshPostgres.Join do
             relationship_destination
           end
 
-        case module.ash_postgres_join(
+        case module.ash_edgedb_join(
                query,
                opts,
                current_binding,
@@ -653,7 +653,7 @@ defmodule AshPostgres.Join do
                relationship_destination
              ) do
           {:ok, query} ->
-            AshPostgres.Aggregate.add_aggregates(
+            AshEdgeDB.Aggregate.add_aggregates(
               query,
               used_aggregates,
               relationship.destination,
@@ -665,9 +665,9 @@ defmodule AshPostgres.Join do
     end
   rescue
     e in UndefinedFunctionError ->
-      if e.function == :ash_postgres_join do
+      if e.function == :ash_edgedb_join do
         reraise """
-                Cannot join to a manual relationship #{inspect(module)} that does not implement the `AshPostgres.ManualRelationship` behaviour.
+                Cannot join to a manual relationship #{inspect(module)} that does not implement the `AshEdgeDB.ManualRelationship` behaviour.
                 """,
                 __STACKTRACE__
       else
@@ -697,12 +697,12 @@ defmodule AshPostgres.Join do
 
     query =
       query
-      |> AshPostgres.DataLayer.add_binding(%{
+      |> AshEdgeDB.DataLayer.add_binding(%{
         path: join_path,
         type: :left,
         source: source
       })
-      |> AshPostgres.DataLayer.add_binding(binding_data)
+      |> AshEdgeDB.DataLayer.add_binding(binding_data)
 
     {:ok, related_filter} =
       Ash.Filter.hydrate_refs(
@@ -729,7 +729,7 @@ defmodule AshPostgres.Join do
 
     used_aggregates =
       filter
-      |> AshPostgres.Aggregate.used_aggregates(
+      |> AshEdgeDB.Aggregate.used_aggregates(
         relationship.destination,
         used_calculations,
         full_path
@@ -833,7 +833,7 @@ defmodule AshPostgres.Join do
             )
         end
 
-      AshPostgres.Aggregate.add_aggregates(
+      AshEdgeDB.Aggregate.add_aggregates(
         query,
         used_aggregates,
         relationship.destination,
@@ -858,7 +858,7 @@ defmodule AshPostgres.Join do
 
     binding_data = %{type: kind, path: full_path, source: source}
 
-    query = AshPostgres.DataLayer.add_binding(query, binding_data)
+    query = AshEdgeDB.DataLayer.add_binding(query, binding_data)
 
     {:ok, related_filter} =
       Ash.Filter.hydrate_refs(
@@ -883,7 +883,7 @@ defmodule AshPostgres.Join do
 
     used_aggregates =
       filter
-      |> AshPostgres.Aggregate.used_aggregates(
+      |> AshEdgeDB.Aggregate.used_aggregates(
         relationship.destination,
         used_calculations,
         full_path
@@ -947,7 +947,7 @@ defmodule AshPostgres.Join do
         relationship_destination =
           used_aggregates
           |> Enum.reject(fn aggregate ->
-            AshPostgres.Aggregate.optimizable_first_aggregate?(
+            AshEdgeDB.Aggregate.optimizable_first_aggregate?(
               relationship.destination,
               aggregate
             )
@@ -1001,7 +1001,7 @@ defmodule AshPostgres.Join do
               )
           end
 
-        AshPostgres.Aggregate.add_aggregates(
+        AshEdgeDB.Aggregate.add_aggregates(
           query,
           used_aggregates,
           relationship.destination,

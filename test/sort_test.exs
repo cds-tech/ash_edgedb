@@ -1,7 +1,7 @@
-defmodule AshPostgres.SortTest do
+defmodule AshEdgeDB.SortTest do
   @moduledoc false
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Comment, Post, PostLink}
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Comment, Post, PostLink}
 
   require Ash.Query
   require Ash.Sort

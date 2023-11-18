@@ -1,7 +1,7 @@
-defmodule AshPostgres.SchemaTest do
+defmodule AshEdgeDB.SchemaTest do
   @moduledoc false
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Author, Profile}
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Author, Profile}
 
   require Ash.Query
 

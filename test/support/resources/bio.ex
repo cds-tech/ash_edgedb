@@ -1,4 +1,4 @@
-defmodule AshPostgres.Test.Bio do
+defmodule AshEdgeDB.Test.Bio do
   @moduledoc false
   use Ash.Resource, data_layer: :embedded
 

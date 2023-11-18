@@ -1,11 +1,11 @@
-defmodule AshPostgres.Test.Manager do
+defmodule AshEdgeDB.Test.Manager do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table("managers")
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   actions do
@@ -32,7 +32,7 @@ defmodule AshPostgres.Test.Manager do
   end
 
   relationships do
-    belongs_to :organization, AshPostgres.Test.Organization do
+    belongs_to :organization, AshEdgeDB.Test.Organization do
       attribute_writable?(true)
     end
   end

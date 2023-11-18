@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.AshPostgres.Create do
+defmodule Mix.Tasks.AshEdgeDB.Create do
   use Mix.Task
 
   @shortdoc "Creates the repository storage"
@@ -19,8 +19,8 @@ defmodule Mix.Tasks.AshPostgres.Create do
 
   ## Examples
 
-      mix ash_postgres.create
-      mix ash_postgres.create --apis MyApp.Api1,MyApp.Api2
+      mix ash_edgedb.create
+      mix ash_edgedb.create --apis MyApp.Api1,MyApp.Api2
 
   ## Command line options
 
@@ -34,14 +34,14 @@ defmodule Mix.Tasks.AshPostgres.Create do
   def run(args) do
     {opts, _} = OptionParser.parse!(args, strict: @switches, aliases: @aliases)
 
-    repos = AshPostgres.MixHelpers.repos!(opts, args)
+    repos = AshEdgeDB.MixHelpers.repos!(opts, args)
 
     repo_args =
       Enum.flat_map(repos, fn repo ->
         ["-r", to_string(repo)]
       end)
 
-    rest_opts = AshPostgres.MixHelpers.delete_arg(args, "--apis")
+    rest_opts = AshEdgeDB.MixHelpers.delete_arg(args, "--apis")
 
     Mix.Task.run("ecto.create", repo_args ++ rest_opts)
   end

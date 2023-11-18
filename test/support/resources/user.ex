@@ -1,6 +1,6 @@
-defmodule AshPostgres.Test.User do
+defmodule AshEdgeDB.Test.User do
   @moduledoc false
-  use Ash.Resource, data_layer: AshPostgres.DataLayer
+  use Ash.Resource, data_layer: AshEdgeDB.DataLayer
 
   actions do
     defaults([:create, :read, :update, :destroy])
@@ -14,11 +14,11 @@ defmodule AshPostgres.Test.User do
 
   postgres do
     table "users"
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   relationships do
-    belongs_to(:organization, AshPostgres.Test.Organization)
-    has_many(:accounts, AshPostgres.Test.Account)
+    belongs_to(:organization, AshEdgeDB.Test.Organization)
+    has_many(:accounts, AshEdgeDB.Test.Account)
   end
 end

@@ -1,7 +1,7 @@
-defmodule AshPostgres.MultitenancyTest.Post do
+defmodule AshEdgeDB.MultitenancyTest.Post do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   attributes do
     uuid_primary_key(:id, writable?: true)
@@ -14,7 +14,7 @@ defmodule AshPostgres.MultitenancyTest.Post do
 
   postgres do
     table "multitenant_posts"
-    repo AshPostgres.TestRepo
+    repo AshEdgeDB.TestRepo
   end
 
   multitenancy do
@@ -24,7 +24,7 @@ defmodule AshPostgres.MultitenancyTest.Post do
   end
 
   relationships do
-    belongs_to(:org, AshPostgres.MultitenancyTest.Org)
-    belongs_to(:user, AshPostgres.MultitenancyTest.User)
+    belongs_to(:org, AshEdgeDB.MultitenancyTest.Org)
+    belongs_to(:user, AshEdgeDB.MultitenancyTest.User)
   end
 end

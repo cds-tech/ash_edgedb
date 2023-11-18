@@ -1,11 +1,11 @@
-defmodule AshPostgres.Extensions.Vector do
+defmodule AshEdgeDB.Extensions.Vector do
   @moduledoc """
   An extension that adds support for the `vector` type.
 
   Create a file with these contents, not inside of a module:
 
   ```elixir
-  Postgrex.Types.define(<YourApp>.PostgrexTypes, [AshPostgres.Extensions.Vector] ++ Ecto.Adapters.Postgres.extensions(), [])
+  Postgrex.Types.define(<YourApp>.PostgrexTypes, [AshEdgeDB.Extensions.Vector] ++ Ecto.Adapters.Postgres.extensions(), [])
   ```
 
   And then ensure that you refer to these types in your repo configuration, i.e

@@ -1,8 +1,8 @@
-defmodule AshPostgres.Test.ComplexCalculations.Api do
+defmodule AshEdgeDB.Test.ComplexCalculations.Api do
   @moduledoc false
   use Ash.Api
 
   resources do
-    registry(AshPostgres.Test.ComplexCalculations.Registry)
+    registry(AshEdgeDB.Test.ComplexCalculations.Registry)
   end
 end

@@ -85,7 +85,7 @@
   ],
   "table": "complex_calculations_certifications_channel_members",
   "hash": "D191734C635BD14D086DDF8157E1C2CF3CE536579A2B3A48ED30BF539E161AAD",
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "check_constraints": [],
   "identities": [],

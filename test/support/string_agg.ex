@@ -1,7 +1,7 @@
-defmodule AshPostgres.Test.StringAgg do
+defmodule AshEdgeDB.Test.StringAgg do
   @moduledoc false
   use Ash.Resource.Aggregate.CustomAggregate
-  use AshPostgres.CustomAggregate
+  use AshEdgeDB.CustomAggregate
 
   require Ecto.Query
 

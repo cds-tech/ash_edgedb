@@ -108,10 +108,7 @@
       "references": null,
       "size": null,
       "source": "point",
-      "type": [
-        "array",
-        "float"
-      ]
+      "type": ["array", "float"]
     },
     {
       "allow_nil?": true,
@@ -181,9 +178,7 @@
   "base_filter": "type = 'sponsored'",
   "check_constraints": [
     {
-      "attribute": [
-        "price"
-      ],
+      "attribute": ["price"],
       "base_filter": "type = 'sponsored'",
       "check": "price > 0",
       "name": "price_must_be_positive"
@@ -197,10 +192,7 @@
     {
       "base_filter": "type = 'sponsored'",
       "index_name": "posts_uniq_one_and_two_index",
-      "keys": [
-        "uniq_one",
-        "uniq_two"
-      ],
+      "keys": ["uniq_one", "uniq_two"],
       "name": "uniq_one_and_two"
     }
   ],
@@ -209,7 +201,7 @@
     "global": null,
     "strategy": null
   },
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "table": "posts"
 }

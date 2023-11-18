@@ -1,10 +1,10 @@
-defmodule AshPostgres.MultitenancyTest.Registry do
+defmodule AshEdgeDB.MultitenancyTest.Registry do
   @moduledoc false
   use Ash.Registry
 
   entries do
-    entry(AshPostgres.MultitenancyTest.Org)
-    entry(AshPostgres.MultitenancyTest.User)
-    entry(AshPostgres.MultitenancyTest.Post)
+    entry(AshEdgeDB.MultitenancyTest.Org)
+    entry(AshEdgeDB.MultitenancyTest.User)
+    entry(AshEdgeDB.MultitenancyTest.Post)
   end
 end

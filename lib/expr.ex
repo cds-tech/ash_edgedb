@@ -1,4 +1,4 @@
-defmodule AshPostgres.Expr do
+defmodule AshEdgeDB.Expr do
   @moduledoc false
 
   alias Ash.Filter
@@ -22,7 +22,7 @@ defmodule AshPostgres.Expr do
     Type
   }
 
-  alias AshPostgres.Functions.{Fragment, ILike, Like, TrigramSimilarity, VectorCosineDistance}
+  alias AshEdgeDB.Functions.{Fragment, ILike, Like, TrigramSimilarity, VectorCosineDistance}
 
   require Ecto.Query
 
@@ -251,7 +251,7 @@ defmodule AshPostgres.Expr do
          embedded?,
          type
        ) do
-    if "citext" in AshPostgres.DataLayer.Info.repo(query.__ash_bindings__.resource, :mutate).installed_extensions() do
+    if "citext" in AshEdgeDB.DataLayer.Info.repo(query.__ash_bindings__.resource, :mutate).installed_extensions() do
       do_dynamic_expr(
         query,
         %Fragment{
@@ -344,7 +344,7 @@ defmodule AshPostgres.Expr do
          type
        ) do
     [condition_type, when_true_type, when_false_type] =
-      case AshPostgres.Types.determine_types(If, [condition, when_true, when_false]) do
+      case AshEdgeDB.Types.determine_types(If, [condition, when_true, when_false]) do
         [condition_type, when_true] ->
           [condition_type, when_true, nil]
 
@@ -587,7 +587,7 @@ defmodule AshPostgres.Expr do
          embedded?,
          type
        ) do
-    [determined_type] = AshPostgres.Types.determine_types(Ash.Query.Function.Minus, [arg])
+    [determined_type] = AshEdgeDB.Types.determine_types(Ash.Query.Function.Minus, [arg])
 
     expr =
       do_dynamic_expr(query, arg, bindings, pred_embedded? || embedded?, determined_type || type)
@@ -614,7 +614,7 @@ defmodule AshPostgres.Expr do
        ) do
     [left_type, right_type] =
       mod
-      |> AshPostgres.Types.determine_types([left, right])
+      |> AshEdgeDB.Types.determine_types([left, right])
 
     left_expr =
       if left_type && operator in @cast_operands_for do
@@ -775,7 +775,7 @@ defmodule AshPostgres.Expr do
     calculation = %{calculation | load: calculation.name}
 
     type =
-      AshPostgres.Types.parameterized_type(
+      AshEdgeDB.Types.parameterized_type(
         calculation.type,
         Map.get(calculation, :constraints, [])
       )
@@ -872,7 +872,7 @@ defmodule AshPostgres.Expr do
     related = Ash.Resource.Info.related(query.__ash_bindings__.resource, ref.relationship_path)
 
     first_optimized_aggregate? =
-      AshPostgres.Aggregate.optimizable_first_aggregate?(related, aggregate)
+      AshEdgeDB.Aggregate.optimizable_first_aggregate?(related, aggregate)
 
     {ref_binding, field_name, value} =
       if first_optimized_aggregate? do
@@ -886,7 +886,7 @@ defmodule AshPostgres.Expr do
         ref =
           %Ash.Query.Ref{
             attribute:
-              AshPostgres.Aggregate.aggregate_field(
+              AshEdgeDB.Aggregate.aggregate_field(
                 aggregate,
                 Ash.Resource.Info.related(query.__ash_bindings__.resource, ref.relationship_path),
                 aggregate.relationship_path,
@@ -936,7 +936,7 @@ defmodule AshPostgres.Expr do
         end
       end
 
-    type = AshPostgres.Types.parameterized_type(aggregate.type, aggregate.constraints)
+    type = AshEdgeDB.Types.parameterized_type(aggregate.type, aggregate.constraints)
     validate_type!(query, type, ref)
 
     type =
@@ -995,7 +995,7 @@ defmodule AshPostgres.Expr do
       |> Map.update!(binding_to_replace, &Map.merge(&1, %{path: [], type: :root}))
 
     type =
-      AshPostgres.Types.parameterized_type(
+      AshEdgeDB.Types.parameterized_type(
         calculation.type,
         Map.get(calculation, :constraints, [])
       )
@@ -1052,7 +1052,7 @@ defmodule AshPostgres.Expr do
        ) do
     arg2 = Ash.Type.get_type(arg2)
     arg1 = maybe_uuid_to_binary(arg2, arg1, arg1)
-    type = AshPostgres.Types.parameterized_type(arg2, constraints)
+    type = AshEdgeDB.Types.parameterized_type(arg2, constraints)
 
     if type do
       Ecto.Query.dynamic(type(^do_dynamic_expr(query, arg1, bindings, embedded?, type), ^type))
@@ -1147,7 +1147,7 @@ defmodule AshPostgres.Expr do
       |> nest_expression(rest)
 
     {:ok, source} =
-      AshPostgres.Join.maybe_get_resource_query(
+      AshEdgeDB.Join.maybe_get_resource_query(
         first_relationship.destination,
         first_relationship,
         query,
@@ -1164,7 +1164,7 @@ defmodule AshPostgres.Expr do
 
     used_aggregates =
       filter
-      |> AshPostgres.Aggregate.used_aggregates(
+      |> AshEdgeDB.Aggregate.used_aggregates(
         first_relationship.destination,
         used_calculations,
         []
@@ -1176,7 +1176,7 @@ defmodule AshPostgres.Expr do
     {:ok, filtered} =
       source
       |> set_parent_path(query)
-      |> AshPostgres.Aggregate.add_aggregates(
+      |> AshEdgeDB.Aggregate.add_aggregates(
         used_aggregates,
         first_relationship.destination,
         false,
@@ -1184,7 +1184,7 @@ defmodule AshPostgres.Expr do
       )
       |> case do
         {:ok, query} ->
-          AshPostgres.DataLayer.filter(
+          AshEdgeDB.DataLayer.filter(
             query,
             filter,
             first_relationship.destination,
@@ -1217,7 +1217,7 @@ defmodule AshPostgres.Expr do
             )
 
           {:ok, subquery} =
-            module.ash_postgres_subquery(
+            module.ash_edgedb_subquery(
               opts,
               source_ref,
               0,
@@ -1244,7 +1244,7 @@ defmodule AshPostgres.Expr do
           through_bindings =
             query
             |> Map.delete(:__ash_bindings__)
-            |> AshPostgres.DataLayer.default_bindings(
+            |> AshEdgeDB.DataLayer.default_bindings(
               query.__ash_bindings__.resource,
               query.__ash_bindings__.context
             )
@@ -1254,7 +1254,7 @@ defmodule AshPostgres.Expr do
             })
 
           {:ok, through} =
-            AshPostgres.Join.maybe_get_resource_query(
+            AshEdgeDB.Join.maybe_get_resource_query(
               first_relationship.through,
               through_relationship,
               query,
@@ -1302,7 +1302,7 @@ defmodule AshPostgres.Expr do
       exists_query
       |> Ecto.Query.exclude(:select)
       |> Ecto.Query.select(1)
-      |> AshPostgres.DataLayer.set_subquery_prefix(query, first_relationship.destination)
+      |> AshEdgeDB.DataLayer.set_subquery_prefix(query, first_relationship.destination)
 
     Ecto.Query.dynamic(exists(Ecto.Query.subquery(exists_query)))
   end
@@ -1331,7 +1331,7 @@ defmodule AshPostgres.Expr do
         constraints
       end
 
-    case AshPostgres.Types.parameterized_type(attr_type || expr_type, constraints) do
+    case AshEdgeDB.Types.parameterized_type(attr_type || expr_type, constraints) do
       nil ->
         if query.__ash_bindings__[:parent?] do
           Ecto.Query.dynamic(field(parent_as(^ref_binding), ^name))
@@ -1369,7 +1369,7 @@ defmodule AshPostgres.Expr do
         if is_list(other) do
           list_expr(query, other, bindings, true, type)
         else
-          raise "Unsupported expression in AshPostgres query: #{inspect(other)}"
+          raise "Unsupported expression in AshEdgeDB query: #{inspect(other)}"
         end
       else
         maybe_sanitize_list(query, other, bindings, true, type)
@@ -1399,7 +1399,7 @@ defmodule AshPostgres.Expr do
       if is_list(value) do
         list_expr(query, value, bindings, false, type)
       else
-        raise "Unsupported expression in AshPostgres query: #{inspect(value)}"
+        raise "Unsupported expression in AshEdgeDB query: #{inspect(value)}"
       end
     else
       case maybe_sanitize_list(query, value, bindings, true, type) do
@@ -1586,7 +1586,7 @@ defmodule AshPostgres.Expr do
 
   defp require_ash_functions!(query, operator) do
     installed_extensions =
-      AshPostgres.DataLayer.Info.repo(query.__ash_bindings__.resource, :mutate).installed_extensions()
+      AshEdgeDB.DataLayer.Info.repo(query.__ash_bindings__.resource, :mutate).installed_extensions()
 
     unless "ash-functions" in installed_extensions do
       raise """
@@ -1598,7 +1598,7 @@ defmodule AshPostgres.Expr do
   end
 
   defp require_extension!(query, extension, context) do
-    repo = AshPostgres.DataLayer.Info.repo(query.__ash_bindings__.resource, :mutate)
+    repo = AshEdgeDB.DataLayer.Info.repo(query.__ash_bindings__.resource, :mutate)
 
     unless extension in repo.installed_extensions() do
       raise Ash.Error.Query.InvalidExpression,
@@ -1617,7 +1617,7 @@ defmodule AshPostgres.Expr do
         nil
 
       {type, constraints} ->
-        AshPostgres.Types.parameterized_type(type, constraints)
+        AshEdgeDB.Types.parameterized_type(type, constraints)
     end
   end
 

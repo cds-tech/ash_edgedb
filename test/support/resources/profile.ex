@@ -1,12 +1,12 @@
-defmodule AshPostgres.Test.Profile do
+defmodule AshEdgeDB.Test.Profile do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table("profile")
     schema("profiles")
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   attributes do
@@ -19,6 +19,6 @@ defmodule AshPostgres.Test.Profile do
   end
 
   relationships do
-    belongs_to(:author, AshPostgres.Test.Author)
+    belongs_to(:author, AshEdgeDB.Test.Author)
   end
 end

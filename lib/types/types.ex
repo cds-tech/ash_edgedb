@@ -1,4 +1,4 @@
-defmodule AshPostgres.Types do
+defmodule AshEdgeDB.Types do
   @moduledoc false
 
   alias Ash.Query.Ref
@@ -30,7 +30,7 @@ defmodule AshPostgres.Types do
   end
 
   def parameterized_type(:tsquery, constraints) do
-    parameterized_type(AshPostgres.Tsquery, constraints)
+    parameterized_type(AshEdgeDB.Tsquery, constraints)
   end
 
   def parameterized_type(type, _constraints) when type in [Ash.Type.Map, Ash.Type.Map.EctoType],

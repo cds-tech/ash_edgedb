@@ -1,4 +1,4 @@
-defmodule AshPostgres.Type do
+defmodule AshEdgeDB.Type do
   @moduledoc """
   Postgres specific callbacks for `Ash.Type`.
 
@@ -10,7 +10,7 @@ defmodule AshPostgres.Type do
 
   defmacro __using__(_) do
     quote do
-      @behaviour AshPostgres.Type
+      @behaviour AshEdgeDB.Type
       def value_to_postgres_default(_, _, _), do: :error
 
       defoverridable value_to_postgres_default: 3

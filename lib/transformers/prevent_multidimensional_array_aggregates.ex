@@ -1,4 +1,4 @@
-defmodule AshPostgres.Transformers.PreventMultidimensionalArrayAggregates do
+defmodule AshEdgeDB.Transformers.PreventMultidimensionalArrayAggregates do
   @moduledoc false
   use Spark.Dsl.Transformer
   alias Spark.Dsl.Transformer

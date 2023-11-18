@@ -1,7 +1,7 @@
-defmodule AshPostgres.Test.ComplexCalculations.Channel do
+defmodule AshEdgeDB.Test.ComplexCalculations.Channel do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer,
+    data_layer: AshEdgeDB.DataLayer,
     authorizers: [Ash.Policy.Authorizer]
 
   require Ash.Expr
@@ -19,19 +19,19 @@ defmodule AshPostgres.Test.ComplexCalculations.Channel do
 
   postgres do
     table "complex_calculations_channels"
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   relationships do
-    has_many(:channel_members, AshPostgres.Test.ComplexCalculations.ChannelMember)
+    has_many(:channel_members, AshEdgeDB.Test.ComplexCalculations.ChannelMember)
 
-    has_one :first_member, AshPostgres.Test.ComplexCalculations.ChannelMember do
+    has_one :first_member, AshEdgeDB.Test.ComplexCalculations.ChannelMember do
       destination_attribute(:channel_id)
       from_many?(true)
       sort(created_at: :asc)
     end
 
-    has_one :second_member, AshPostgres.Test.ComplexCalculations.ChannelMember do
+    has_one :second_member, AshEdgeDB.Test.ComplexCalculations.ChannelMember do
       destination_attribute(:channel_id)
       from_many?(true)
       sort(created_at: :desc)

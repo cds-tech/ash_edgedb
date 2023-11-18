@@ -86,9 +86,7 @@
     {
       "base_filter": null,
       "index_name": "managers_uniq_code_index",
-      "keys": [
-        "code"
-      ],
+      "keys": ["code"],
       "name": "uniq_code"
     }
   ],
@@ -97,7 +95,7 @@
     "global": null,
     "strategy": null
   },
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "table": "managers"
 }

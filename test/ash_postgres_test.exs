@@ -1,14 +1,14 @@
-defmodule AshPostgresTest do
-  use AshPostgres.RepoCase, async: false
+defmodule AshEdgeDBTest do
+  use AshEdgeDB.RepoCase, async: false
 
   test "transaction metadata is given to on_transaction_begin" do
-    AshPostgres.Test.Post
+    AshEdgeDB.Test.Post
     |> Ash.Changeset.new(%{title: "title"})
-    |> AshPostgres.Test.Api.create!()
+    |> AshEdgeDB.Test.Api.create!()
 
     assert_receive %{
       type: :create,
-      metadata: %{action: :create, actor: nil, resource: AshPostgres.Test.Post}
+      metadata: %{action: :create, actor: nil, resource: AshEdgeDB.Test.Post}
     }
   end
 end

@@ -1,4 +1,4 @@
-defmodule AshPostgres.MultiTenancy do
+defmodule AshEdgeDB.MultiTenancy do
   @moduledoc false
 
   @dialyzer {:nowarn_function, load_migration!: 1}

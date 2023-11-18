@@ -1,7 +1,7 @@
-defmodule AshPostgres.Test.ComplexCalculations.ChannelMember do
+defmodule AshEdgeDB.Test.ComplexCalculations.ChannelMember do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer,
+    data_layer: AshEdgeDB.DataLayer,
     authorizers: [Ash.Policy.Authorizer]
 
   actions do
@@ -17,11 +17,11 @@ defmodule AshPostgres.Test.ComplexCalculations.ChannelMember do
 
   postgres do
     table "complex_calculations_certifications_channel_members"
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   relationships do
-    belongs_to(:user, AshPostgres.Test.User, api: AshPostgres.Test.Api)
-    belongs_to(:channel, AshPostgres.Test.ComplexCalculations.Channel)
+    belongs_to(:user, AshEdgeDB.Test.User, api: AshEdgeDB.Test.Api)
+    belongs_to(:channel, AshEdgeDB.Test.ComplexCalculations.Channel)
   end
 end

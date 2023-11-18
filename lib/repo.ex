@@ -1,25 +1,25 @@
-defmodule AshPostgres.Repo do
+defmodule AshEdgeDB.Repo do
   @moduledoc """
-  Resources that use `AshPostgres.DataLayer` use a `Repo` to access the database.
+  Resources that use `AshEdgeDB.DataLayer` use a `Repo` to access the database.
 
   This repo is a thin wrapper around an `Ecto.Repo`.
 
   You can use `Ecto.Repo`'s `init/2` to configure your repo like normal, but
   instead of returning `{:ok, config}`, use `super(config)` to pass the
-  configuration to the `AshPostgres.Repo` implementation.
+  configuration to the `AshEdgeDB.Repo` implementation.
 
   ## Installed Extensions
 
   To configure your list of installed extensions, define `installed_extensions/0`
 
-  Extensions that are relevant to ash_postgres:
+  Extensions that are relevant to ash_edgedb:
 
   * "ash-functions" - This isn't really an extension, but it expresses that certain functions
     should be added when generating migrations, to support the `||` and `&&` operators in expressions.
   * `"uuid-ossp"` - Sets UUID primary keys defaults in the migration generator
-  * `"pg_trgm"` - Makes the `AshPostgres.Functions.TrigramSimilarity` function available
+  * `"pg_trgm"` - Makes the `AshEdgeDB.Functions.TrigramSimilarity` function available
   * "citext" - Allows case insensitive fields to be used
-  * `"vector"` - Makes the `AshPostgres.Functions.VectorCosineDistance` function available. See `AshPostgres.Extensions.Vector` for more setup instructions.
+  * `"vector"` - Makes the `AshEdgeDB.Functions.VectorCosineDistance` function available. See `AshEdgeDB.Extensions.Vector` for more setup instructions.
 
   ```
   def installed_extensions() do
@@ -49,7 +49,7 @@ defmodule AshPostgres.Repo do
   ## Combining with other tools
 
   For things like `Fly.Repo`, where you might need to have more fine grained control over the repo module,
-  you can use the `define_ecto_repo?: false` option to `use AshPostgres.Repo`.
+  you can use the `define_ecto_repo?: false` option to `use AshEdgeDB.Repo`.
   """
   @callback min_pg_version() :: integer()
 
@@ -76,7 +76,7 @@ defmodule AshPostgres.Repo do
           otp_app: otp_app
       end
 
-      @behaviour AshPostgres.Repo
+      @behaviour AshEdgeDB.Repo
 
       defoverridable insert: 2, insert: 1, insert!: 2, insert!: 1
 

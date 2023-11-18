@@ -33,7 +33,7 @@
   ],
   "table": "complex_calculations_channels",
   "hash": "2C35FB16B98FA229F91F69D2D3BEEDA41BAB55896E59247A96D9068AD5BF000A",
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "check_constraints": [],
   "identities": [],

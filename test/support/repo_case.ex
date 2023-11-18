@@ -1,4 +1,4 @@
-defmodule AshPostgres.RepoCase do
+defmodule AshEdgeDB.RepoCase do
   @moduledoc false
   use ExUnit.CaseTemplate
 
@@ -6,21 +6,21 @@ defmodule AshPostgres.RepoCase do
 
   using do
     quote do
-      alias AshPostgres.TestRepo
+      alias AshEdgeDB.TestRepo
 
       import Ecto
       import Ecto.Query
-      import AshPostgres.RepoCase
+      import AshEdgeDB.RepoCase
 
       # and any other stuff
     end
   end
 
   setup tags do
-    :ok = Sandbox.checkout(AshPostgres.TestRepo)
+    :ok = Sandbox.checkout(AshEdgeDB.TestRepo)
 
     unless tags[:async] do
-      Sandbox.mode(AshPostgres.TestRepo, {:shared, self()})
+      Sandbox.mode(AshEdgeDB.TestRepo, {:shared, self()})
     end
 
     :ok

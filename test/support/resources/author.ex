@@ -1,18 +1,18 @@
-defmodule AshPostgres.Test.Author do
+defmodule AshEdgeDB.Test.Author do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table("authors")
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   attributes do
     uuid_primary_key(:id, writable?: true)
     attribute(:first_name, :string)
     attribute(:last_name, :string)
-    attribute(:bio, AshPostgres.Test.Bio)
+    attribute(:bio, AshEdgeDB.Test.Bio)
     attribute(:badges, {:array, :atom})
   end
 
@@ -21,8 +21,8 @@ defmodule AshPostgres.Test.Author do
   end
 
   relationships do
-    has_one(:profile, AshPostgres.Test.Profile)
-    has_many(:posts, AshPostgres.Test.Post)
+    has_one(:profile, AshEdgeDB.Test.Profile)
+    has_many(:posts, AshEdgeDB.Test.Post)
   end
 
   aggregates do
@@ -89,7 +89,7 @@ defmodule AshPostgres.Test.Author do
 
     calculate :param_full_name,
               :string,
-              {AshPostgres.Test.Concat, keys: [:first_name, :last_name]} do
+              {AshEdgeDB.Test.Concat, keys: [:first_name, :last_name]} do
       argument(:separator, :string, default: " ", constraints: [allow_empty?: true, trim?: false])
     end
   end

@@ -1,11 +1,11 @@
-defmodule AshPostgres.Test.IntegerPost do
+defmodule AshEdgeDB.Test.IntegerPost do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table "integer_posts"
-    repo AshPostgres.TestRepo
+    repo AshEdgeDB.TestRepo
   end
 
   actions do

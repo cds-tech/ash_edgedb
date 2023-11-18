@@ -48,10 +48,7 @@
       "references": null,
       "size": null,
       "source": "badges",
-      "type": [
-        "array",
-        "text"
-      ]
+      "type": ["array", "text"]
     }
   ],
   "base_filter": null,
@@ -66,7 +63,7 @@
     "global": null,
     "strategy": null
   },
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "table": "authors"
 }

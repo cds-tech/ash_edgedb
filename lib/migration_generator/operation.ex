@@ -1,4 +1,4 @@
-defmodule AshPostgres.MigrationGenerator.Operation do
+defmodule AshEdgeDB.MigrationGenerator.Operation do
   @moduledoc false
 
   defmodule Helper do
@@ -346,7 +346,7 @@ defmodule AshPostgres.MigrationGenerator.Operation do
             multitenancy: multitenancy
           } = op
         ) do
-      AshPostgres.MigrationGenerator.Operation.RemoveAttribute.up(%{
+      AshEdgeDB.MigrationGenerator.Operation.RemoveAttribute.up(%{
         op
         | attribute: attribute,
           table: table,
@@ -427,7 +427,7 @@ defmodule AshPostgres.MigrationGenerator.Operation do
           schema: schema
         }) do
       type_or_reference =
-        if AshPostgres.MigrationGenerator.has_reference?(multitenancy, attribute) and
+        if AshEdgeDB.MigrationGenerator.has_reference?(multitenancy, attribute) and
              Map.get(old_attribute, :references) != Map.get(attribute, :references) do
           reference(multitenancy, attribute, schema)
         else
@@ -677,11 +677,11 @@ defmodule AshPostgres.MigrationGenerator.Operation do
       """
 
       contents =
-        %AshPostgres.MigrationGenerator.Operation.AddAttribute{
+        %AshEdgeDB.MigrationGenerator.Operation.AddAttribute{
           attribute: attribute,
           multitenancy: multitenancy
         }
-        |> AshPostgres.MigrationGenerator.Operation.AddAttribute.up()
+        |> AshEdgeDB.MigrationGenerator.Operation.AddAttribute.up()
         |> String.split("\n")
         |> Enum.map_join("\n", &"# #{&1}")
 
@@ -689,8 +689,8 @@ defmodule AshPostgres.MigrationGenerator.Operation do
     end
 
     def down(%{attribute: attribute, multitenancy: multitenancy, table: table, schema: schema}) do
-      AshPostgres.MigrationGenerator.Operation.AddAttribute.up(
-        %AshPostgres.MigrationGenerator.Operation.AddAttribute{
+      AshEdgeDB.MigrationGenerator.Operation.AddAttribute.up(
+        %AshEdgeDB.MigrationGenerator.Operation.AddAttribute{
           attribute: attribute,
           table: table,
           schema: schema,
@@ -840,7 +840,7 @@ defmodule AshPostgres.MigrationGenerator.Operation do
     end
 
     def down(%{schema: schema, index: index, table: table, multitenancy: multitenancy}) do
-      index_name = AshPostgres.CustomIndex.name(table, index)
+      index_name = AshEdgeDB.CustomIndex.name(table, index)
 
       keys =
         case multitenancy.strategy do
@@ -895,7 +895,7 @@ defmodule AshPostgres.MigrationGenerator.Operation do
     import Helper
 
     def up(%{index: index, table: table, multitenancy: multitenancy, schema: schema}) do
-      index_name = AshPostgres.CustomIndex.name(table, index)
+      index_name = AshEdgeDB.CustomIndex.name(table, index)
 
       keys =
         case multitenancy.strategy do

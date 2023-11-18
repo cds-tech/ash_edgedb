@@ -1,7 +1,7 @@
-defmodule AshPostgres.EmbeddableResourceTest do
+defmodule AshEdgeDB.EmbeddableResourceTest do
   @moduledoc false
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Author, Bio, Post}
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Author, Bio, Post}
 
   require Ash.Query
 
@@ -15,7 +15,7 @@ defmodule AshPostgres.EmbeddableResourceTest do
   end
 
   test "calculations can load json", %{post: post} do
-    assert %{calc_returning_json: %AshPostgres.Test.Money{amount: 100, currency: :usd}} =
+    assert %{calc_returning_json: %AshEdgeDB.Test.Money{amount: 100, currency: :usd}} =
              Api.load!(post, :calc_returning_json)
   end
 

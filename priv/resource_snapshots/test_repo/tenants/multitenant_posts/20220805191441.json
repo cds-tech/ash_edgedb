@@ -81,7 +81,7 @@
     "global": false,
     "strategy": "context"
   },
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "table": "multitenant_posts"
 }

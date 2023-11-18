@@ -1,4 +1,4 @@
-defmodule AshPostgres.Test.Money do
+defmodule AshEdgeDB.Test.Money do
   @moduledoc false
   use Ash.Resource,
     data_layer: :embedded

@@ -1,11 +1,11 @@
-defmodule AshPostgres.Test.Organization do
+defmodule AshEdgeDB.Test.Organization do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table("orgs")
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   actions do
@@ -18,8 +18,8 @@ defmodule AshPostgres.Test.Organization do
   end
 
   relationships do
-    has_many(:users, AshPostgres.Test.User)
-    has_many(:posts, AshPostgres.Test.Post)
-    has_many(:managers, AshPostgres.Test.Manager)
+    has_many(:users, AshEdgeDB.Test.User)
+    has_many(:posts, AshEdgeDB.Test.Post)
+    has_many(:managers, AshEdgeDB.Test.Manager)
   end
 end

@@ -1,6 +1,6 @@
-defmodule AshPostgres.Test.ComplexCalculations.Certification do
+defmodule AshEdgeDB.Test.ComplexCalculations.Certification do
   @moduledoc false
-  use Ash.Resource, data_layer: AshPostgres.DataLayer
+  use Ash.Resource, data_layer: AshEdgeDB.DataLayer
 
   actions do
     defaults([:create, :read, :update, :destroy])
@@ -39,10 +39,10 @@ defmodule AshPostgres.Test.ComplexCalculations.Certification do
 
   postgres do
     table "complex_calculations_certifications"
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   relationships do
-    has_many(:skills, AshPostgres.Test.ComplexCalculations.Skill)
+    has_many(:skills, AshEdgeDB.Test.ComplexCalculations.Skill)
   end
 end

@@ -49,7 +49,7 @@
   ],
   "table": "complex_calculations_skills",
   "hash": "D2569EE39E2C9C58AAA3EB9E03A5EE726C5CD2F43D7387DA213F2C2D539F7606",
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "check_constraints": [],
   "identities": [],

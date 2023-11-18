@@ -1,8 +1,8 @@
-defmodule AshPostgres.Test.Api do
+defmodule AshEdgeDB.Test.Api do
   @moduledoc false
   use Ash.Api
 
   resources do
-    registry(AshPostgres.Test.Registry)
+    registry(AshEdgeDB.Test.Registry)
   end
 end

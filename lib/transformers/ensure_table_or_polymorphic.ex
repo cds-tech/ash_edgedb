@@ -1,4 +1,4 @@
-defmodule AshPostgres.Transformers.EnsureTableOrPolymorphic do
+defmodule AshEdgeDB.Transformers.EnsureTableOrPolymorphic do
   @moduledoc false
   use Spark.Dsl.Transformer
   alias Spark.Dsl.Transformer

@@ -1,4 +1,4 @@
-defmodule AshPostgres.Test.Types.StatusEnum do
+defmodule AshEdgeDB.Test.Types.StatusEnum do
   @moduledoc false
   use Ash.Type.Enum, values: [:open, :closed]
 

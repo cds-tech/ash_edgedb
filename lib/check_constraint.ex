@@ -1,4 +1,4 @@
-defmodule AshPostgres.CheckConstraint do
+defmodule AshEdgeDB.CheckConstraint do
   @moduledoc "Represents a configured check constraint on the table backing a resource"
 
   defstruct [:attribute, :name, :message, :check]

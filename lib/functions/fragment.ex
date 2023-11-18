@@ -1,4 +1,4 @@
-defmodule AshPostgres.Functions.Fragment do
+defmodule AshEdgeDB.Functions.Fragment do
   @moduledoc """
   A function that maps to ecto's `fragment` function
 

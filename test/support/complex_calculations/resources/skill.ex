@@ -1,6 +1,6 @@
-defmodule AshPostgres.Test.ComplexCalculations.Skill do
+defmodule AshEdgeDB.Test.ComplexCalculations.Skill do
   @moduledoc false
-  use Ash.Resource, data_layer: AshPostgres.DataLayer
+  use Ash.Resource, data_layer: AshEdgeDB.DataLayer
 
   actions do
     defaults([:create, :read, :update, :destroy])
@@ -33,17 +33,17 @@ defmodule AshPostgres.Test.ComplexCalculations.Skill do
 
   postgres do
     table "complex_calculations_skills"
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
   end
 
   relationships do
-    belongs_to(:certification, AshPostgres.Test.ComplexCalculations.Certification)
+    belongs_to(:certification, AshEdgeDB.Test.ComplexCalculations.Certification)
 
-    has_many :documentations, AshPostgres.Test.ComplexCalculations.Documentation do
+    has_many :documentations, AshEdgeDB.Test.ComplexCalculations.Documentation do
       sort(timestamp: :desc, inserted_at: :desc)
     end
 
-    has_one :latest_documentation, AshPostgres.Test.ComplexCalculations.Documentation do
+    has_one :latest_documentation, AshEdgeDB.Test.ComplexCalculations.Documentation do
       sort(timestamp: :desc, inserted_at: :desc)
     end
   end

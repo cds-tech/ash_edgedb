@@ -1,7 +1,7 @@
-defmodule AshPostgres.Test.MultitenancyTest do
-  use AshPostgres.RepoCase, async: false
+defmodule AshEdgeDB.Test.MultitenancyTest do
+  use AshEdgeDB.RepoCase, async: false
 
-  alias AshPostgres.MultitenancyTest.{Api, Org, Post, User}
+  alias AshEdgeDB.MultitenancyTest.{Api, Org, Post, User}
 
   setup do
     org1 =
@@ -27,7 +27,7 @@ defmodule AshPostgres.Test.MultitenancyTest do
       |> Enum.map(&tenant/1)
       |> Enum.sort()
 
-    assert Enum.sort(AshPostgres.TestRepo.all_tenants()) == tenant_ids
+    assert Enum.sort(AshEdgeDB.TestRepo.all_tenants()) == tenant_ids
   end
 
   test "attribute multitenancy works", %{org1: %{id: org_id} = org1} do
@@ -70,7 +70,7 @@ defmodule AshPostgres.Test.MultitenancyTest do
 
     assert {:ok, %{rows: [[^new_tenant]]}} =
              Ecto.Adapters.SQL.query(
-               AshPostgres.TestRepo,
+               AshEdgeDB.TestRepo,
                """
                SELECT schema_name FROM information_schema.schemata WHERE schema_name = '#{new_tenant}';
                """

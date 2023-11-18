@@ -1,4 +1,4 @@
-defmodule AshPostgres.CustomIndex do
+defmodule AshEdgeDB.CustomIndex do
   @moduledoc "Represents a custom index on the table backing a resource"
   @fields [
     :table,

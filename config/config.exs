@@ -2,9 +2,9 @@ import Config
 
 if Mix.env() == :dev do
   config :git_ops,
-    mix_project: AshPostgres.MixProject,
+    mix_project: AshEdgeDB.MixProject,
     changelog_file: "CHANGELOG.md",
-    repository_url: "https://github.com/ash-project/ash_postgres",
+    repository_url: "https://github.com/ash-project/ash_edgedb",
     # Instructs the tool to manage your mix version in your `mix.exs` file
     # See below for more information
     manage_mix_version?: true,
@@ -18,34 +18,34 @@ if Mix.env() == :test do
   config :ash, :validate_api_resource_inclusion?, false
   config :ash, :validate_api_config_inclusion?, false
 
-  config :ash_postgres, AshPostgres.TestRepo,
+  config :ash_edgedb, AshEdgeDB.TestRepo,
     username: "postgres",
-    database: "ash_postgres_test",
+    database: "ash_edgedb_test",
     hostname: "localhost",
     pool: Ecto.Adapters.SQL.Sandbox
 
   # sobelow_skip ["Config.Secrets"]
-  config :ash_postgres, AshPostgres.TestRepo, password: "postgres"
+  config :ash_edgedb, AshEdgeDB.TestRepo, password: "postgres"
 
-  config :ash_postgres, AshPostgres.TestRepo, migration_primary_key: [name: :id, type: :binary_id]
+  config :ash_edgedb, AshEdgeDB.TestRepo, migration_primary_key: [name: :id, type: :binary_id]
 
-  config :ash_postgres, AshPostgres.TestNoSandboxRepo,
+  config :ash_edgedb, AshEdgeDB.TestNoSandboxRepo,
     username: "postgres",
-    database: "ash_postgres_test",
+    database: "ash_edgedb_test",
     hostname: "localhost"
 
   # sobelow_skip ["Config.Secrets"]
-  config :ash_postgres, AshPostgres.TestNoSandboxRepo, password: "postgres"
+  config :ash_edgedb, AshEdgeDB.TestNoSandboxRepo, password: "postgres"
 
-  config :ash_postgres, AshPostgres.TestNoSandboxRepo,
+  config :ash_edgedb, AshEdgeDB.TestNoSandboxRepo,
     migration_primary_key: [name: :id, type: :binary_id]
 
-  config :ash_postgres,
-    ecto_repos: [AshPostgres.TestRepo, AshPostgres.TestNoSandboxRepo],
+  config :ash_edgedb,
+    ecto_repos: [AshEdgeDB.TestRepo, AshEdgeDB.TestNoSandboxRepo],
     ash_apis: [
-      AshPostgres.Test.Api,
-      AshPostgres.MultitenancyTest.Api,
-      AshPostgres.Test.ComplexCalculations.Api
+      AshEdgeDB.Test.Api,
+      AshEdgeDB.MultitenancyTest.Api,
+      AshEdgeDB.Test.ComplexCalculations.Api
     ]
 
   config :logger, level: :warning

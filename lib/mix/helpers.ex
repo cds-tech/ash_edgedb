@@ -1,4 +1,4 @@
-defmodule AshPostgres.MixHelpers do
+defmodule AshEdgeDB.MixHelpers do
   @moduledoc false
   def apis!(opts, args) do
     apps =
@@ -43,13 +43,13 @@ defmodule AshPostgres.MixHelpers do
     resources =
       apis
       |> Enum.flat_map(&Ash.Api.Info.resources/1)
-      |> Enum.filter(&(Ash.DataLayer.data_layer(&1) == AshPostgres.DataLayer))
+      |> Enum.filter(&(Ash.DataLayer.data_layer(&1) == AshEdgeDB.DataLayer))
       |> case do
         [] ->
           raise """
-          No resources with `data_layer: AshPostgres.DataLayer` found in the apis #{Enum.map_join(apis, ",", &inspect/1)}.
+          No resources with `data_layer: AshEdgeDB.DataLayer` found in the apis #{Enum.map_join(apis, ",", &inspect/1)}.
 
-          Must be able to find at least one resource with `data_layer: AshPostgres.DataLayer`.
+          Must be able to find at least one resource with `data_layer: AshEdgeDB.DataLayer`.
           """
 
         resources ->
@@ -58,7 +58,7 @@ defmodule AshPostgres.MixHelpers do
 
     resources
     |> Enum.flat_map(
-      &[AshPostgres.DataLayer.Info.repo(&1, :read), AshPostgres.DataLayer.Info.repo(&1, :mutate)]
+      &[AshEdgeDB.DataLayer.Info.repo(&1, :read), AshEdgeDB.DataLayer.Info.repo(&1, :mutate)]
     )
     |> Enum.uniq()
     |> case do
@@ -68,7 +68,7 @@ defmodule AshPostgres.MixHelpers do
 
         At least one resource must have a repo configured.
 
-        The following resources were found with `data_layer: AshPostgres.DataLayer`:
+        The following resources were found with `data_layer: AshEdgeDB.DataLayer`:
 
         #{Enum.map_join(resources, "\n", &"* #{inspect(&1)}")}
         """

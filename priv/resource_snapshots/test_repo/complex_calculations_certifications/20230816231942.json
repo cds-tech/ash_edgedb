@@ -13,7 +13,7 @@
   ],
   "table": "complex_calculations_certifications",
   "hash": "A4D8129693BDC95C72E91842B17BB1B44951D91A87DC166A3371D052E4D27C1F",
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "check_constraints": [],
   "identities": [],

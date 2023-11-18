@@ -1,22 +1,22 @@
-defmodule AshPostgres.TestRepo do
+defmodule AshEdgeDB.TestRepo do
   @moduledoc false
-  use AshPostgres.Repo,
-    otp_app: :ash_postgres
+  use AshEdgeDB.Repo,
+    otp_app: :ash_edgedb
 
   def on_transaction_begin(data) do
     send(self(), data)
   end
 
   def installed_extensions do
-    ["ash-functions", "uuid-ossp", "pg_trgm", "citext", AshPostgres.TestCustomExtension] --
-      Application.get_env(:ash_postgres, :no_extensions, [])
+    ["ash-functions", "uuid-ossp", "pg_trgm", "citext", AshEdgeDB.TestCustomExtension] --
+      Application.get_env(:ash_edgedb, :no_extensions, [])
   end
 
   def all_tenants do
-    Code.ensure_compiled(AshPostgres.MultitenancyTest.Org)
+    Code.ensure_compiled(AshEdgeDB.MultitenancyTest.Org)
 
-    AshPostgres.MultitenancyTest.Org
-    |> AshPostgres.MultitenancyTest.Api.read!()
+    AshEdgeDB.MultitenancyTest.Org
+    |> AshEdgeDB.MultitenancyTest.Api.read!()
     |> Enum.map(&"org_#{&1.id}")
   end
 end

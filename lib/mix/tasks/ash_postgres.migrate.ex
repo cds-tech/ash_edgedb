@@ -1,7 +1,7 @@
-defmodule Mix.Tasks.AshPostgres.Migrate do
+defmodule Mix.Tasks.AshEdgeDB.Migrate do
   use Mix.Task
 
-  import AshPostgres.MixHelpers,
+  import AshEdgeDB.MixHelpers,
     only: [migrations_path: 2, tenant_migrations_path: 2, tenants: 2]
 
   @shortdoc "Runs the repository migrations for all repositories in the provided (or congigured) apis"
@@ -52,13 +52,13 @@ defmodule Mix.Tasks.AshPostgres.Migrate do
 
   ## Examples
 
-      mix ash_postgres.migrate
-      mix ash_postgres.migrate --apis MyApp.Api1,MyApp.Api2
+      mix ash_edgedb.migrate
+      mix ash_edgedb.migrate --apis MyApp.Api1,MyApp.Api2
 
-      mix ash_postgres.migrate -n 3
-      mix ash_postgres.migrate --step 3
+      mix ash_edgedb.migrate -n 3
+      mix ash_edgedb.migrate --step 3
 
-      mix ash_postgres.migrate --to 20080906120000
+      mix ash_edgedb.migrate --to 20080906120000
 
   ## Command line options
 
@@ -103,7 +103,7 @@ defmodule Mix.Tasks.AshPostgres.Migrate do
   def run(args) do
     {opts, _} = OptionParser.parse!(args, strict: @switches, aliases: @aliases)
 
-    repos = AshPostgres.MixHelpers.repos!(opts, args)
+    repos = AshEdgeDB.MixHelpers.repos!(opts, args)
 
     repo_args =
       Enum.flat_map(repos, fn repo ->
@@ -112,17 +112,17 @@ defmodule Mix.Tasks.AshPostgres.Migrate do
 
     rest_opts =
       args
-      |> AshPostgres.MixHelpers.delete_arg("--apis")
-      |> AshPostgres.MixHelpers.delete_arg("--migrations-path")
-      |> AshPostgres.MixHelpers.delete_flag("--tenants")
-      |> AshPostgres.MixHelpers.delete_flag("--only-tenants")
-      |> AshPostgres.MixHelpers.delete_flag("--except-tenants")
+      |> AshEdgeDB.MixHelpers.delete_arg("--apis")
+      |> AshEdgeDB.MixHelpers.delete_arg("--migrations-path")
+      |> AshEdgeDB.MixHelpers.delete_flag("--tenants")
+      |> AshEdgeDB.MixHelpers.delete_flag("--only-tenants")
+      |> AshEdgeDB.MixHelpers.delete_flag("--except-tenants")
 
     if opts[:tenants] do
       for repo <- repos do
         Ecto.Migrator.with_repo(repo, fn repo ->
           for tenant <- tenants(repo, opts) do
-            rest_opts = AshPostgres.MixHelpers.delete_arg(rest_opts, "--prefix")
+            rest_opts = AshEdgeDB.MixHelpers.delete_arg(rest_opts, "--prefix")
 
             Mix.Task.run(
               "ecto.migrate",

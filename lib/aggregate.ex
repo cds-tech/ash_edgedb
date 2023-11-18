@@ -1,4 +1,4 @@
-defmodule AshPostgres.Aggregate do
+defmodule AshEdgeDB.Aggregate do
   @moduledoc false
 
   import Ecto.Query, only: [from: 2, subquery: 1]
@@ -22,7 +22,7 @@ defmodule AshPostgres.Aggregate do
   def add_aggregates(query, aggregates, resource, select?, source_binding, root_data) do
     case resource_aggregates_to_aggregates(resource, aggregates) do
       {:ok, aggregates} ->
-        query = AshPostgres.DataLayer.default_bindings(query, resource)
+        query = AshEdgeDB.DataLayer.default_bindings(query, resource)
 
         {query, aggregates, aggregate_name_mapping} =
           Enum.reduce(aggregates, {query, [], %{}}, fn aggregate,
@@ -102,7 +102,7 @@ defmodule AshPostgres.Aggregate do
                     end
 
                   exists =
-                    AshPostgres.Expr.dynamic_expr(
+                    AshEdgeDB.Expr.dynamic_expr(
                       query,
                       %Ash.Query.Exists{path: aggregate.relationship_path, expr: expr},
                       query.__ash_bindings__
@@ -112,7 +112,7 @@ defmodule AshPostgres.Aggregate do
 
                 true ->
                   with {:ok, agg_root_query} <-
-                         AshPostgres.Join.maybe_get_resource_query(
+                         AshEdgeDB.Join.maybe_get_resource_query(
                            first_relationship.destination,
                            first_relationship,
                            query,
@@ -278,13 +278,13 @@ defmodule AshPostgres.Aggregate do
           {resource, []}
       end
 
-    case AshPostgres.Join.join_all_relationships(
+    case AshEdgeDB.Join.join_all_relationships(
            query,
            nil,
            [],
            [
              {:left,
-              AshPostgres.Join.relationship_path_to_relationships(
+              AshEdgeDB.Join.relationship_path_to_relationships(
                 resource,
                 path ++ aggregate.relationship_path
               )}
@@ -310,9 +310,9 @@ defmodule AshPostgres.Aggregate do
             resource: resource
           }
 
-        value = AshPostgres.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
+        value = AshEdgeDB.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
 
-        type = AshPostgres.Types.parameterized_type(aggregate.type, aggregate.constraints)
+        type = AshEdgeDB.Types.parameterized_type(aggregate.type, aggregate.constraints)
 
         with_default =
           if aggregate.default_value do
@@ -414,7 +414,7 @@ defmodule AshPostgres.Aggregate do
         {:ok, agg_query} ->
           if has_filter?(aggregate.query) && is_single? do
             {:cont,
-             AshPostgres.DataLayer.filter(agg_query, filter, agg_query.__ash_bindings__.resource)}
+             AshEdgeDB.DataLayer.filter(agg_query, filter, agg_query.__ash_bindings__.resource)}
           else
             {:cont, {:ok, agg_query}}
           end
@@ -449,14 +449,14 @@ defmodule AshPostgres.Aggregate do
       end
 
     {:ok, subquery} =
-      module.ash_postgres_subquery(
+      module.ash_edgedb_subquery(
         opts,
         source_binding,
         subquery.__ash_bindings__.current - 1,
         new_subquery
       )
 
-    subquery = AshPostgres.Join.set_join_prefix(subquery, query, first_relationship.destination)
+    subquery = AshEdgeDB.Join.set_join_prefix(subquery, query, first_relationship.destination)
 
     query =
       from(row in query,
@@ -465,7 +465,7 @@ defmodule AshPostgres.Aggregate do
         on: true
       )
 
-    AshPostgres.DataLayer.add_binding(
+    AshEdgeDB.DataLayer.add_binding(
       query,
       %{
         path: [],
@@ -487,7 +487,7 @@ defmodule AshPostgres.Aggregate do
     join_relationship_struct = Ash.Resource.Info.relationship(source, join_relationship)
 
     {:ok, through} =
-      AshPostgres.Join.maybe_get_resource_query(
+      AshEdgeDB.Join.maybe_get_resource_query(
         join_relationship_struct.destination,
         join_relationship_struct,
         query,
@@ -522,7 +522,7 @@ defmodule AshPostgres.Aggregate do
             )
       )
 
-    subquery = AshPostgres.Join.set_join_prefix(subquery, query, first_relationship.destination)
+    subquery = AshEdgeDB.Join.set_join_prefix(subquery, query, first_relationship.destination)
 
     query =
       from(row in query,
@@ -531,7 +531,7 @@ defmodule AshPostgres.Aggregate do
         on: true
       )
 
-    AshPostgres.DataLayer.add_binding(
+    AshEdgeDB.DataLayer.add_binding(
       query,
       %{
         path: [],
@@ -564,7 +564,7 @@ defmodule AshPostgres.Aggregate do
         )
       end
 
-    subquery = AshPostgres.Join.set_join_prefix(subquery, query, first_relationship.destination)
+    subquery = AshEdgeDB.Join.set_join_prefix(subquery, query, first_relationship.destination)
 
     query =
       from(row in query,
@@ -573,7 +573,7 @@ defmodule AshPostgres.Aggregate do
         on: true
       )
 
-    AshPostgres.DataLayer.add_binding(
+    AshEdgeDB.DataLayer.add_binding(
       query,
       %{
         path: [],
@@ -632,13 +632,13 @@ defmodule AshPostgres.Aggregate do
     if Enum.empty?(relationship_path) do
       {:ok, agg_root_query}
     else
-      AshPostgres.Join.join_all_relationships(
+      AshEdgeDB.Join.join_all_relationships(
         agg_root_query,
         nil,
         [],
         [
           {:inner,
-           AshPostgres.Join.relationship_path_to_relationships(
+           AshEdgeDB.Join.relationship_path_to_relationships(
              first_relationship.destination,
              relationship_path
            )}
@@ -691,7 +691,7 @@ defmodule AshPostgres.Aggregate do
         kind: :first,
         relationship_path: relationship_path
       }) do
-    name in AshPostgres.DataLayer.Info.simple_join_first_aggregates(resource) ||
+    name in AshEdgeDB.DataLayer.Info.simple_join_first_aggregates(resource) ||
       single_path?(resource, relationship_path)
   end
 
@@ -743,7 +743,7 @@ defmodule AshPostgres.Aggregate do
   end
 
   defp select_dynamic(_resource, _query, aggregate, binding) do
-    type = AshPostgres.Types.parameterized_type(aggregate.type, aggregate.constraints)
+    type = AshEdgeDB.Types.parameterized_type(aggregate.type, aggregate.constraints)
 
     field =
       if type do
@@ -832,7 +832,7 @@ defmodule AshPostgres.Aggregate do
         is_single?,
         first_relationship
       ) do
-    query = AshPostgres.DataLayer.default_bindings(query, aggregate.resource)
+    query = AshEdgeDB.DataLayer.default_bindings(query, aggregate.resource)
 
     ref = %Ash.Query.Ref{
       attribute: aggregate_field(aggregate, resource, relationship_path, query),
@@ -840,17 +840,17 @@ defmodule AshPostgres.Aggregate do
       resource: query.__ash_bindings__.resource
     }
 
-    type = AshPostgres.Types.parameterized_type(aggregate.type, aggregate.constraints)
+    type = AshEdgeDB.Types.parameterized_type(aggregate.type, aggregate.constraints)
 
     binding =
-      AshPostgres.DataLayer.get_binding(
+      AshEdgeDB.DataLayer.get_binding(
         query.__ash_bindings__.resource,
         relationship_path,
         query,
         [:left, :inner, :root]
       )
 
-    field = AshPostgres.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
+    field = AshEdgeDB.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
 
     has_sort? = has_sort?(aggregate.query)
 
@@ -864,7 +864,7 @@ defmodule AshPostgres.Aggregate do
           end
 
         {:ok, sort_expr, query} =
-          AshPostgres.Sort.sort(
+          AshEdgeDB.Sort.sort(
             query,
             sort,
             Ash.Resource.Info.related(
@@ -879,11 +879,11 @@ defmodule AshPostgres.Aggregate do
         question_marks = Enum.map(sort_expr, fn _ -> " ? " end)
 
         {:ok, expr} =
-          AshPostgres.Functions.Fragment.casted_new(
+          AshEdgeDB.Functions.Fragment.casted_new(
             ["array_agg(? ORDER BY #{question_marks})", field] ++ sort_expr
           )
 
-        AshPostgres.Expr.dynamic_expr(query, expr, query.__ash_bindings__, false)
+        AshEdgeDB.Expr.dynamic_expr(query, expr, query.__ash_bindings__, false)
       else
         Ecto.Query.dynamic(
           [row],
@@ -924,11 +924,11 @@ defmodule AshPostgres.Aggregate do
         is_single?,
         first_relationship
       ) do
-    query = AshPostgres.DataLayer.default_bindings(query, aggregate.resource)
-    type = AshPostgres.Types.parameterized_type(aggregate.type, aggregate.constraints)
+    query = AshEdgeDB.DataLayer.default_bindings(query, aggregate.resource)
+    type = AshEdgeDB.Types.parameterized_type(aggregate.type, aggregate.constraints)
 
     binding =
-      AshPostgres.DataLayer.get_binding(
+      AshEdgeDB.DataLayer.get_binding(
         query.__ash_bindings__.resource,
         relationship_path,
         query,
@@ -941,7 +941,7 @@ defmodule AshPostgres.Aggregate do
       resource: query.__ash_bindings__.resource
     }
 
-    field = AshPostgres.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
+    field = AshEdgeDB.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
 
     has_sort? = has_sort?(aggregate.query)
 
@@ -955,7 +955,7 @@ defmodule AshPostgres.Aggregate do
           end
 
         {:ok, sort_expr, query} =
-          AshPostgres.Sort.sort(
+          AshEdgeDB.Sort.sort(
             query,
             sort,
             Ash.Resource.Info.related(
@@ -977,11 +977,11 @@ defmodule AshPostgres.Aggregate do
           end
 
         {:ok, expr} =
-          AshPostgres.Functions.Fragment.casted_new(
+          AshEdgeDB.Functions.Fragment.casted_new(
             ["array_agg(#{distinct}? ORDER BY #{question_marks})", field] ++ sort_expr
           )
 
-        AshPostgres.Expr.dynamic_expr(query, expr, query.__ash_bindings__, false)
+        AshEdgeDB.Expr.dynamic_expr(query, expr, query.__ash_bindings__, false)
       else
         if Map.get(aggregate, :uniq?) do
           Ecto.Query.dynamic(
@@ -1028,7 +1028,7 @@ defmodule AshPostgres.Aggregate do
         _first_relationship
       )
       when kind in [:count, :sum, :avg, :max, :min, :custom] do
-    query = AshPostgres.DataLayer.default_bindings(query, aggregate.resource)
+    query = AshEdgeDB.DataLayer.default_bindings(query, aggregate.resource)
 
     ref = %Ash.Query.Ref{
       attribute: aggregate_field(aggregate, resource, relationship_path, query),
@@ -1041,13 +1041,13 @@ defmodule AshPostgres.Aggregate do
         # we won't use this if its custom so don't try to make one
         nil
       else
-        AshPostgres.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
+        AshEdgeDB.Expr.dynamic_expr(query, ref, query.__ash_bindings__, false)
       end
 
-    type = AshPostgres.Types.parameterized_type(aggregate.type, aggregate.constraints)
+    type = AshEdgeDB.Types.parameterized_type(aggregate.type, aggregate.constraints)
 
     binding =
-      AshPostgres.DataLayer.get_binding(
+      AshEdgeDB.DataLayer.get_binding(
         query.__ash_bindings__.resource,
         relationship_path,
         query,
@@ -1117,12 +1117,12 @@ defmodule AshPostgres.Aggregate do
         )
 
       expr =
-        AshPostgres.Expr.dynamic_expr(
+        AshEdgeDB.Expr.dynamic_expr(
           query,
           filter,
           query.__ash_bindings__,
           false,
-          AshPostgres.Types.parameterized_type(aggregate.type, aggregate.constraints)
+          AshEdgeDB.Types.parameterized_type(aggregate.type, aggregate.constraints)
         )
 
       Ecto.Query.dynamic(filter(^field, ^expr))
@@ -1157,12 +1157,12 @@ defmodule AshPostgres.Aggregate do
          ) do
       %Ash.Resource.Calculation{calculation: {module, opts}} = calculation ->
         calc_type =
-          AshPostgres.Types.parameterized_type(
+          AshEdgeDB.Types.parameterized_type(
             calculation.type,
             Map.get(calculation, :constraints, [])
           )
 
-        AshPostgres.Expr.validate_type!(query, calc_type, "#{inspect(calculation.name)}")
+        AshEdgeDB.Expr.validate_type!(query, calc_type, "#{inspect(calculation.name)}")
 
         {:ok, query_calc} =
           Ash.Query.Calculation.new(

@@ -1,11 +1,11 @@
 # Polymorphic Resources
 
-To support leveraging the same resource backed by multiple tables (useful for things like polymorphic associations), AshPostgres supports setting the `data_layer.table` context for a given resource. For this example, lets assume that you have a `MyApp.Post` resource and a `MyApp.Comment` resource. For each of those resources, users can submit `reactions`. However, you want a separate table for `post_reactions` and `comment_reactions`. You could accomplish that like so:
+To support leveraging the same resource backed by multiple tables (useful for things like polymorphic associations), AshEdgeDB supports setting the `data_layer.table` context for a given resource. For this example, lets assume that you have a `MyApp.Post` resource and a `MyApp.Comment` resource. For each of those resources, users can submit `reactions`. However, you want a separate table for `post_reactions` and `comment_reactions`. You could accomplish that like so:
 
 ```elixir
 defmodule MyApp.Reaction do
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     polymorphic? true # Without this, `table` is a required configuration
@@ -14,7 +14,7 @@ defmodule MyApp.Reaction do
   attributes do
     attribute(:resource_id, :uuid)
   end
-  
+
   ...
 end
 ```
@@ -24,7 +24,7 @@ Then, in your related resources, you set the table context like so:
 ```elixir
 defmodule MyApp.Post do
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   ...
 
@@ -37,7 +37,7 @@ end
 
 defmodule MyApp.Comment do
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   ...
 
@@ -78,5 +78,5 @@ end
 When a migration is marked as `polymorphic? true`, the migration generator will look at
 all resources that are related to it, that set the `%{data_layer: %{table: "table"}}` context.
 For each of those, a migration is generated/managed automatically. This means that adding reactions
-to a new resource is as easy as adding the relationship and table context, and then running 
-`mix ash_postgres.generate_migrations`.
+to a new resource is as easy as adding the relationship and table context, and then running
+`mix ash_edgedb.generate_migrations`.

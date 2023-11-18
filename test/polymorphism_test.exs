@@ -1,6 +1,6 @@
-defmodule AshPostgres.PolymorphismTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Post, Rating}
+defmodule AshEdgeDB.PolymorphismTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Post, Rating}
 
   require Ash.Query
 

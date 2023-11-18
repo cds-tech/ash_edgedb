@@ -1,4 +1,4 @@
-defmodule AshPostgres.Calculation do
+defmodule AshEdgeDB.Calculation do
   @moduledoc false
 
   require Ecto.Query
@@ -6,10 +6,10 @@ defmodule AshPostgres.Calculation do
   def add_calculations(query, [], _, _), do: {:ok, query}
 
   def add_calculations(query, calculations, resource, source_binding) do
-    query = AshPostgres.DataLayer.default_bindings(query, resource)
+    query = AshEdgeDB.DataLayer.default_bindings(query, resource)
 
     {:ok, query} =
-      AshPostgres.Join.join_all_relationships(
+      AshEdgeDB.Join.join_all_relationships(
         query,
         %Ash.Filter{
           resource: resource,
@@ -28,7 +28,7 @@ defmodule AshPostgres.Calculation do
             []
           )
 
-        AshPostgres.Aggregate.used_aggregates(
+        AshEdgeDB.Aggregate.used_aggregates(
           expression,
           query.__ash_bindings__.resource,
           used_calculations,
@@ -37,7 +37,7 @@ defmodule AshPostgres.Calculation do
       end)
       |> Enum.uniq()
 
-    case AshPostgres.Aggregate.add_aggregates(
+    case AshEdgeDB.Aggregate.add_aggregates(
            query,
            aggregates,
            query.__ash_bindings__.resource,
@@ -55,7 +55,7 @@ defmodule AshPostgres.Calculation do
         dynamics =
           Enum.map(calculations, fn {calculation, expression} ->
             type =
-              AshPostgres.Types.parameterized_type(
+              AshEdgeDB.Types.parameterized_type(
                 calculation.type,
                 Map.get(calculation, :constraints, [])
               )
@@ -70,7 +70,7 @@ defmodule AshPostgres.Calculation do
               )
 
             expr =
-              AshPostgres.Expr.dynamic_expr(
+              AshEdgeDB.Expr.dynamic_expr(
                 query,
                 expression,
                 query.__ash_bindings__,

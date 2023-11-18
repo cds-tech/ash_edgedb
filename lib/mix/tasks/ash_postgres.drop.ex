@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.AshPostgres.Drop do
+defmodule Mix.Tasks.AshEdgeDB.Drop do
   use Mix.Task
 
   @shortdoc "Drops the repository storage for the repos in the specified (or configured) apis"
@@ -23,8 +23,8 @@ defmodule Mix.Tasks.AshPostgres.Drop do
 
   ## Examples
 
-      mix ash_postgres.drop
-      mix ash_postgres.drop -r MyApp.Api1,MyApp.Api2
+      mix ash_edgedb.drop
+      mix ash_edgedb.drop -r MyApp.Api1,MyApp.Api2
 
   ## Command line options
 
@@ -44,14 +44,14 @@ defmodule Mix.Tasks.AshPostgres.Drop do
     {opts, _} = OptionParser.parse!(args, strict: @switches, aliases: @aliases)
     opts = Keyword.merge(@default_opts, opts)
 
-    repos = AshPostgres.MixHelpers.repos!(opts, args)
+    repos = AshEdgeDB.MixHelpers.repos!(opts, args)
 
     repo_args =
       Enum.flat_map(repos, fn repo ->
         ["-r", to_string(repo)]
       end)
 
-    rest_opts = AshPostgres.MixHelpers.delete_arg(args, "--apis")
+    rest_opts = AshEdgeDB.MixHelpers.delete_arg(args, "--apis")
 
     Mix.Task.run("ecto.drop", repo_args ++ rest_opts)
   end

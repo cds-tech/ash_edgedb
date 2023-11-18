@@ -1,7 +1,7 @@
-defmodule AshPostgres.ConstraintTest do
+defmodule AshEdgeDB.ConstraintTest do
   @moduledoc false
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Post}
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Post}
 
   require Ash.Query
 

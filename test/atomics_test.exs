@@ -1,6 +1,6 @@
-defmodule AshPostgres.AtomicsTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Post}
+defmodule AshEdgeDB.AtomicsTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Post}
 
   import Ash.Expr
 

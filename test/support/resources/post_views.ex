@@ -1,6 +1,6 @@
-defmodule AshPostgres.Test.PostView do
+defmodule AshEdgeDB.Test.PostView do
   @moduledoc false
-  use Ash.Resource, data_layer: AshPostgres.DataLayer
+  use Ash.Resource, data_layer: AshEdgeDB.DataLayer
 
   actions do
     defaults([:create, :read])
@@ -12,7 +12,7 @@ defmodule AshPostgres.Test.PostView do
   end
 
   relationships do
-    belongs_to :post, AshPostgres.Test.Post do
+    belongs_to :post, AshEdgeDB.Test.Post do
       allow_nil?(false)
       attribute_writable?(true)
     end
@@ -24,7 +24,7 @@ defmodule AshPostgres.Test.PostView do
 
   postgres do
     table "post_views"
-    repo AshPostgres.TestRepo
+    repo AshEdgeDB.TestRepo
 
     references do
       reference :post, ignore?: true

@@ -1,7 +1,7 @@
-defmodule Mix.Tasks.AshPostgres.Rollback do
+defmodule Mix.Tasks.AshEdgeDB.Rollback do
   use Mix.Task
 
-  import AshPostgres.MixHelpers,
+  import AshEdgeDB.MixHelpers,
     only: [migrations_path: 2, tenant_migrations_path: 2, tenants: 2]
 
   @shortdoc "Rolls back the repository migrations for all repositories in the provided (or configured) apis"
@@ -22,12 +22,12 @@ defmodule Mix.Tasks.AshPostgres.Rollback do
   ecto specific task, `mix ecto.migrate` and provide your repo name.
 
   ## Examples
-      mix ash_postgres.rollback
-      mix ash_postgres.rollback -r Custom.Repo
-      mix ash_postgres.rollback -n 3
-      mix ash_postgres.rollback --step 3
-      mix ash_postgres.rollback -v 20080906120000
-      mix ash_postgres.rollback --to 20080906120000
+      mix ash_edgedb.rollback
+      mix ash_edgedb.rollback -r Custom.Repo
+      mix ash_edgedb.rollback -n 3
+      mix ash_edgedb.rollback --step 3
+      mix ash_edgedb.rollback -v 20080906120000
+      mix ash_edgedb.rollback --to 20080906120000
 
   ## Command line options
     * `--apis` - the apis who's repos should be rolledback
@@ -62,7 +62,7 @@ defmodule Mix.Tasks.AshPostgres.Rollback do
         aliases: [n: :step, v: :to]
       )
 
-    repos = AshPostgres.MixHelpers.repos!(opts, args)
+    repos = AshEdgeDB.MixHelpers.repos!(opts, args)
 
     repo_args =
       Enum.flat_map(repos, fn repo ->
@@ -71,17 +71,17 @@ defmodule Mix.Tasks.AshPostgres.Rollback do
 
     rest_opts =
       args
-      |> AshPostgres.MixHelpers.delete_arg("--apis")
-      |> AshPostgres.MixHelpers.delete_arg("--migrations-path")
-      |> AshPostgres.MixHelpers.delete_flag("--tenants")
-      |> AshPostgres.MixHelpers.delete_flag("--only-tenants")
-      |> AshPostgres.MixHelpers.delete_flag("--except-tenants")
+      |> AshEdgeDB.MixHelpers.delete_arg("--apis")
+      |> AshEdgeDB.MixHelpers.delete_arg("--migrations-path")
+      |> AshEdgeDB.MixHelpers.delete_flag("--tenants")
+      |> AshEdgeDB.MixHelpers.delete_flag("--only-tenants")
+      |> AshEdgeDB.MixHelpers.delete_flag("--except-tenants")
 
     if opts[:tenants] do
       for repo <- repos do
         Ecto.Migrator.with_repo(repo, fn repo ->
           for tenant <- tenants(repo, opts) do
-            rest_opts = AshPostgres.MixHelpers.delete_arg(rest_opts, "--prefix")
+            rest_opts = AshEdgeDB.MixHelpers.delete_arg(rest_opts, "--prefix")
 
             Mix.Task.run(
               "ecto.rollback",

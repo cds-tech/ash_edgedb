@@ -1,4 +1,4 @@
-defmodule AshPostgres.Migration do
+defmodule AshEdgeDB.Migration do
   @moduledoc "Utilities for use in migrations"
 
   @doc """
@@ -8,7 +8,7 @@ defmodule AshPostgres.Migration do
 
   ```elixir
   def up() do
-    AshPostgres.Migration.create_enum(MyEnumType)
+    AshEdgeDB.Migration.create_enum(MyEnumType)
   end
   ```
 

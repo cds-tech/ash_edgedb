@@ -1,6 +1,6 @@
-defmodule AshPostgres.FilterTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Author, Comment, Post}
+defmodule AshEdgeDB.FilterTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Author, Comment, Post}
 
   require Ash.Query
 
@@ -31,12 +31,12 @@ defmodule AshPostgres.FilterTest do
   describe "citext validation" do
     setup do
       on_exit(fn ->
-        Application.delete_env(:ash_postgres, :no_extensions)
+        Application.delete_env(:ash_edgedb, :no_extensions)
       end)
     end
 
     test "it raises if you try to use ci_string while ci_text is not installed" do
-      Application.put_env(:ash_postgres, :no_extensions, ["citext"])
+      Application.put_env(:ash_edgedb, :no_extensions, ["citext"])
 
       assert_raise Ash.Error.Query.InvalidExpression, fn ->
         Post

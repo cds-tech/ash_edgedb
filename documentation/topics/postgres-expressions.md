@@ -1,9 +1,10 @@
 # Postgres Expressions
 
-In addition to the expressions listed in the [Ash expressions guide](https://hexdocs.pm/ash/expressions.html), AshPostgres provides the following expressions
+In addition to the expressions listed in the [Ash expressions guide](https://hexdocs.pm/ash/expressions.html), AshEdgeDB provides the following expressions
 
 ## Fragments
-`fragment` allows you to embed raw sql into the query. Use question marks to interpolate values from the outer expression. 
+
+`fragment` allows you to embed raw sql into the query. Use question marks to interpolate values from the outer expression.
 
 For example:
 
@@ -13,9 +14,9 @@ Ash.Query.filter(User, fragment("? IS NOT NULL", first_name))
 
 # Like and ILike
 
-These wrap the postgres builtin like and ilike operators. 
+These wrap the postgres builtin like and ilike operators.
 
-Please be aware, these match *patterns* not raw text. Use `contains/1` if you want to match text without supporting patterns, i.e `%` and `_` have semantic meaning!
+Please be aware, these match _patterns_ not raw text. Use `contains/1` if you want to match text without supporting patterns, i.e `%` and `_` have semantic meaning!
 
 For example:
 

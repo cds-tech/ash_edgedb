@@ -1,4 +1,4 @@
-defmodule AshPostgres.MixProject do
+defmodule AshEdgeDB.MixProject do
   use Mix.Project
 
   @description """
@@ -10,7 +10,7 @@ defmodule AshPostgres.MixProject do
 
   def project do
     [
-      app: :ash_postgres,
+      app: :ash_edgedb,
       version: @version,
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
@@ -36,7 +36,7 @@ defmodule AshPostgres.MixProject do
       docs: docs(),
       aliases: aliases(),
       package: package(),
-      source_url: "https://github.com/ash-project/ash_postgres/",
+      source_url: "https://github.com/ash-project/ash_edgedb/",
       homepage_url: "https://ash-hq.org",
       consolidate_protocols: true
     ]
@@ -46,7 +46,7 @@ defmodule AshPostgres.MixProject do
     def application() do
       [
         applications: [:ecto, :ecto_sql, :jason, :ash, :postgrex, :tools, :benchee],
-        mod: {AshPostgres.TestApp, []}
+        mod: {AshEdgeDB.TestApp, []}
       ]
     end
   end
@@ -56,12 +56,12 @@ defmodule AshPostgres.MixProject do
 
   defp package do
     [
-      name: :ash_postgres,
+      name: :ash_edgedb,
       licenses: ["MIT"],
       files: ~w(lib .formatter.exs mix.exs README* LICENSE*
       CHANGELOG* documentation),
       links: %{
-        GitHub: "https://github.com/ash-project/ash_postgres"
+        GitHub: "https://github.com/ash-project/ash_edgedb"
       }
     ]
   end
@@ -136,17 +136,17 @@ defmodule AshPostgres.MixProject do
       spark: [
         mix_tasks: [
           Postgres: [
-            Mix.Tasks.AshPostgres.GenerateMigrations,
-            Mix.Tasks.AshPostgres.Create,
-            Mix.Tasks.AshPostgres.Drop,
-            Mix.Tasks.AshPostgres.Migrate,
-            Mix.Tasks.AshPostgres.Rollback
+            Mix.Tasks.AshEdgeDB.GenerateMigrations,
+            Mix.Tasks.AshEdgeDB.Create,
+            Mix.Tasks.AshEdgeDB.Drop,
+            Mix.Tasks.AshEdgeDB.Migrate,
+            Mix.Tasks.AshEdgeDB.Rollback
           ]
         ],
         extensions: [
           %{
-            module: AshPostgres.DataLayer,
-            name: "AshPostgres",
+            module: AshEdgeDB.DataLayer,
+            name: "AshEdgeDB",
             target: "Ash.Resource",
             type: "DataLayer"
           }
@@ -154,43 +154,43 @@ defmodule AshPostgres.MixProject do
       ],
       groups_for_extras: groups_for_extras(),
       groups_for_modules: [
-        AshPostgres: [
-          AshPostgres,
-          AshPostgres.Repo,
-          AshPostgres.DataLayer
+        AshEdgeDB: [
+          AshEdgeDB,
+          AshEdgeDB.Repo,
+          AshEdgeDB.DataLayer
         ],
         Utilities: [
-          AshPostgres.ManualRelationship
+          AshEdgeDB.ManualRelationship
         ],
         Introspection: [
-          AshPostgres.DataLayer.Info,
-          AshPostgres.CheckConstraint,
-          AshPostgres.CustomExtension,
-          AshPostgres.CustomIndex,
-          AshPostgres.Reference,
-          AshPostgres.Statement
+          AshEdgeDB.DataLayer.Info,
+          AshEdgeDB.CheckConstraint,
+          AshEdgeDB.CustomExtension,
+          AshEdgeDB.CustomIndex,
+          AshEdgeDB.Reference,
+          AshEdgeDB.Statement
         ],
         Types: [
-          AshPostgres.Type,
-          AshPostgres.Tsquery,
-          AshPostgres.Tsvector
+          AshEdgeDB.Type,
+          AshEdgeDB.Tsquery,
+          AshEdgeDB.Tsvector
         ],
         Extensions: [
-          AshPostgres.Extensions.Vector
+          AshEdgeDB.Extensions.Vector
         ],
         "Custom Aggregates": [
-          AshPostgres.CustomAggregate
+          AshEdgeDB.CustomAggregate
         ],
         "Postgres Migrations": [
-          AshPostgres.Migration,
+          AshEdgeDB.Migration,
           EctoMigrationDefault
         ],
         Expressions: [
-          AshPostgres.Functions.Fragment,
-          AshPostgres.Functions.TrigramSimilarity,
-          AshPostgres.Functions.ILike,
-          AshPostgres.Functions.Like,
-          AshPostgres.Functions.VectorCosineDistance
+          AshEdgeDB.Functions.Fragment,
+          AshEdgeDB.Functions.TrigramSimilarity,
+          AshEdgeDB.Functions.ILike,
+          AshEdgeDB.Functions.Like,
+          AshEdgeDB.Functions.VectorCosineDistance
         ],
         Internals: ~r/.*/
       ]
@@ -246,18 +246,18 @@ defmodule AshPostgres.MixProject do
         "spark.replace_doc_links",
         "spark.cheat_sheets_in_search"
       ],
-      "spark.formatter": "spark.formatter --extensions AshPostgres.DataLayer",
-      "spark.cheat_sheets": "spark.cheat_sheets --extensions AshPostgres.DataLayer",
+      "spark.formatter": "spark.formatter --extensions AshEdgeDB.DataLayer",
+      "spark.cheat_sheets": "spark.cheat_sheets --extensions AshEdgeDB.DataLayer",
       "spark.cheat_sheets_in_search":
-        "spark.cheat_sheets_in_search --extensions AshPostgres.DataLayer",
-      "test.generate_migrations": "ash_postgres.generate_migrations",
-      "test.check_migrations": "ash_postgres.generate_migrations --check",
-      "test.migrate_tenants": "ash_postgres.migrate --tenants",
-      "test.migrate": "ash_postgres.migrate",
-      "test.rollback": "ash_postgres.rollback",
-      "test.create": "ash_postgres.create",
-      "test.reset": ["test.drop", "test.create", "test.migrate", "ash_postgres.migrate --tenants"],
-      "test.drop": "ash_postgres.drop"
+        "spark.cheat_sheets_in_search --extensions AshEdgeDB.DataLayer",
+      "test.generate_migrations": "ash_edgedb.generate_migrations",
+      "test.check_migrations": "ash_edgedb.generate_migrations --check",
+      "test.migrate_tenants": "ash_edgedb.migrate --tenants",
+      "test.migrate": "ash_edgedb.migrate",
+      "test.rollback": "ash_edgedb.rollback",
+      "test.create": "ash_edgedb.create",
+      "test.reset": ["test.drop", "test.create", "test.migrate", "ash_edgedb.migrate --tenants"],
+      "test.drop": "ash_edgedb.drop"
     ]
   end
 end

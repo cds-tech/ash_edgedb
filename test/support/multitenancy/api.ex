@@ -1,8 +1,8 @@
-defmodule AshPostgres.MultitenancyTest.Api do
+defmodule AshEdgeDB.MultitenancyTest.Api do
   @moduledoc false
   use Ash.Api
 
   resources do
-    registry(AshPostgres.MultitenancyTest.Registry)
+    registry(AshEdgeDB.MultitenancyTest.Registry)
   end
 end

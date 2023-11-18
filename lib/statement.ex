@@ -1,4 +1,4 @@
-defmodule AshPostgres.Statement do
+defmodule AshEdgeDB.Statement do
   @moduledoc "Represents a custom statement to be run in generated migrations"
 
   @fields [

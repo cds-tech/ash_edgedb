@@ -1,4 +1,4 @@
-alias AshPostgres.Test.{Api, Post}
+alias AshEdgeDB.Test.{Api, Post}
 
 ten_rows =
   1..10
@@ -31,7 +31,7 @@ Api.bulk_create(ten_rows, Post, :create,
 )
 
 # do them both once to warm things up
-AshPostgres.TestRepo.insert_all(Post, ten_rows)
+AshEdgeDB.TestRepo.insert_all(Post, ten_rows)
 
 max_concurrency = 16
 batch_size = 200
@@ -55,7 +55,7 @@ Benchee.run(
       input
       |> Stream.chunk_every(batch_size)
       |> Enum.each(fn batch ->
-        AshPostgres.TestRepo.insert_all(Post, batch)
+        AshEdgeDB.TestRepo.insert_all(Post, batch)
       end)
     end,
     "ash async stream": fn input ->
@@ -98,13 +98,13 @@ Benchee.run(
       input
       |> Stream.chunk_every(batch_size)
       |> Task.async_stream(fn batch ->
-        AshPostgres.TestRepo.insert_all(Post, batch)
+        AshEdgeDB.TestRepo.insert_all(Post, batch)
       end, max_concurrency: max_concurrency, timeout: :infinity)
       |> Stream.run()
     end
   },
   after_scenario: fn _ ->
-    AshPostgres.TestRepo.query!("TRUNCATE posts CASCADE")
+    AshEdgeDB.TestRepo.query!("TRUNCATE posts CASCADE")
   end,
   inputs: %{
     "10 rows" => ten_rows,

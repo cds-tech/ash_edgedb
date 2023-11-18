@@ -1,7 +1,7 @@
-defmodule AshPostgres.MultitenancyTest.Org do
+defmodule AshEdgeDB.MultitenancyTest.Org do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   identities do
     identity(:unique_by_name, [:name])
@@ -18,7 +18,7 @@ defmodule AshPostgres.MultitenancyTest.Org do
 
   postgres do
     table "multitenant_orgs"
-    repo(AshPostgres.TestRepo)
+    repo(AshEdgeDB.TestRepo)
 
     manage_tenant do
       template(["org_", :id])
@@ -33,8 +33,8 @@ defmodule AshPostgres.MultitenancyTest.Org do
   end
 
   relationships do
-    has_many(:posts, AshPostgres.MultitenancyTest.Post, destination_attribute: :org_id)
-    has_many(:users, AshPostgres.MultitenancyTest.User, destination_attribute: :org_id)
+    has_many(:posts, AshEdgeDB.MultitenancyTest.Post, destination_attribute: :org_id)
+    has_many(:users, AshEdgeDB.MultitenancyTest.User, destination_attribute: :org_id)
   end
 
   def tenant("org_" <> tenant) do

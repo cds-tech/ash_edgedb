@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.AshPostgres.GenerateMigrations do
+defmodule Mix.Tasks.AshEdgeDB.GenerateMigrations do
   @moduledoc """
   Generates migrations, and stores a snapshot of your resources.
 
@@ -55,8 +55,8 @@ defmodule Mix.Tasks.AshPostgres.GenerateMigrations do
   #### Defaults
   There are three anonymous functions that will translate to database-specific defaults currently:
 
-  * `&Ash.UUID.generate/0` - Only if `uuid-ossp` is in your `c:AshPostgres.Repo.installed_extensions()`
-  * `&Ecto.UUID.generate/0` - Only if `uuid-ossp` is in your `c:AshPostgres.Repo.installed_extensions()`
+  * `&Ash.UUID.generate/0` - Only if `uuid-ossp` is in your `c:AshEdgeDB.Repo.installed_extensions()`
+  * `&Ecto.UUID.generate/0` - Only if `uuid-ossp` is in your `c:AshEdgeDB.Repo.installed_extensions()`
   * `&DateTime.utc_now/0`
 
   Non-function default values will be dumped to their native type and inspected. This may not work for some types,
@@ -88,13 +88,13 @@ defmodule Mix.Tasks.AshPostgres.GenerateMigrations do
         ]
       )
 
-    apis = AshPostgres.MixHelpers.apis!(opts, args)
+    apis = AshEdgeDB.MixHelpers.apis!(opts, args)
 
     opts =
       opts
       |> Keyword.put(:format, !opts[:no_format])
       |> Keyword.delete(:no_format)
 
-    AshPostgres.MigrationGenerator.generate(apis, opts)
+    AshEdgeDB.MigrationGenerator.generate(apis, opts)
   end
 end

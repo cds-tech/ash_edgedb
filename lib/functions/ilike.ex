@@ -1,4 +1,4 @@
-defmodule AshPostgres.Functions.ILike do
+defmodule AshEdgeDB.Functions.ILike do
   @moduledoc """
   Maps to the builtin postgres function `ilike`.
   """

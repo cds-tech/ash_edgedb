@@ -1,6 +1,6 @@
-defmodule AshPostgres.Test.CustomIndexTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Post}
+defmodule AshEdgeDB.Test.CustomIndexTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Post}
 
   require Ash.Query
 

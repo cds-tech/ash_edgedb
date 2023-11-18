@@ -79,7 +79,7 @@
   ],
   "table": "complex_calculations_documentations",
   "hash": "26FCE27CAB6B3B67C7E099831352AF89AFD352CBD6E30043C4354B0400F09FBD",
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "check_constraints": [],
   "identities": [],

@@ -1,6 +1,6 @@
-defmodule AshPostgres.Test.ManualRelationshipsTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Comment, Post}
+defmodule AshEdgeDB.Test.ManualRelationshipsTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Comment, Post}
 
   require Ash.Query
 

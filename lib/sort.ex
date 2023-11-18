@@ -1,4 +1,4 @@
-defmodule AshPostgres.Sort do
+defmodule AshEdgeDB.Sort do
   @moduledoc false
   require Ecto.Query
 
@@ -10,7 +10,7 @@ defmodule AshPostgres.Sort do
         binding \\ 0,
         type \\ :window
       ) do
-    query = AshPostgres.DataLayer.default_bindings(query, resource)
+    query = AshEdgeDB.DataLayer.default_bindings(query, resource)
 
     used_aggregates =
       Enum.flat_map(sort, fn
@@ -55,7 +55,7 @@ defmodule AshPostgres.Sort do
       end)
 
     {:ok, query} =
-      AshPostgres.Join.join_all_relationships(
+      AshEdgeDB.Join.join_all_relationships(
         query,
         %Ash.Filter{
           resource: resource,
@@ -64,7 +64,7 @@ defmodule AshPostgres.Sort do
         left_only?: true
       )
 
-    case AshPostgres.Aggregate.add_aggregates(query, used_aggregates, resource, false, 0) do
+    case AshEdgeDB.Aggregate.add_aggregates(query, used_aggregates, resource, false, 0) do
       {:error, error} ->
         {:error, error}
 
@@ -75,7 +75,7 @@ defmodule AshPostgres.Sort do
           {order, %Ash.Query.Calculation{} = calc}, {:ok, query_expr} ->
             type =
               if calc.type do
-                AshPostgres.Types.parameterized_type(calc.type, calc.constraints)
+                AshEdgeDB.Types.parameterized_type(calc.type, calc.constraints)
               else
                 nil
               end
@@ -102,7 +102,7 @@ defmodule AshPostgres.Sort do
                   end
 
                 expr =
-                  AshPostgres.Expr.dynamic_expr(
+                  AshEdgeDB.Expr.dynamic_expr(
                     query,
                     expr,
                     bindings,
@@ -135,7 +135,7 @@ defmodule AshPostgres.Sort do
                       attr = Ash.Resource.Info.attribute(related, aggregate.field)
 
                       if attr && related do
-                        {:ok, AshPostgres.Types.parameterized_type(attr.type, attr.constraints)}
+                        {:ok, AshEdgeDB.Types.parameterized_type(attr.type, attr.constraints)}
                       else
                         {:ok, nil}
                       end
@@ -166,8 +166,8 @@ defmodule AshPostgres.Sort do
 
                   {binding, sort} =
                     if aggregate &&
-                         AshPostgres.Aggregate.optimizable_first_aggregate?(resource, aggregate) do
-                      {AshPostgres.Join.get_binding(
+                         AshEdgeDB.Aggregate.optimizable_first_aggregate?(resource, aggregate) do
+                      {AshEdgeDB.Join.get_binding(
                          resource,
                          aggregate.relationship_path,
                          query,

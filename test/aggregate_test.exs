@@ -1,6 +1,6 @@
-defmodule AshPostgres.AggregateTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Author, Comment, Organization, Post, Rating, User}
+defmodule AshEdgeDB.AggregateTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Author, Comment, Organization, Post, Rating, User}
 
   require Ash.Query
 
@@ -591,11 +591,11 @@ defmodule AshPostgres.AggregateTest do
       defmodule Foo do
         @moduledoc false
         use Ash.Resource,
-          data_layer: AshPostgres.DataLayer
+          data_layer: AshEdgeDB.DataLayer
 
         postgres do
           table("profile")
-          repo(AshPostgres.TestRepo)
+          repo(AshEdgeDB.TestRepo)
         end
 
         attributes do
@@ -607,7 +607,7 @@ defmodule AshPostgres.AggregateTest do
         end
 
         relationships do
-          belongs_to(:author, AshPostgres.Test.Author)
+          belongs_to(:author, AshEdgeDB.Test.Author)
         end
 
         aggregates do
@@ -747,7 +747,7 @@ defmodule AshPostgres.AggregateTest do
         |> Api.create!()
 
       author =
-        AshPostgres.Test.Author
+        AshEdgeDB.Test.Author
         |> Ash.Changeset.new(%{"first_name" => "ted"})
         |> Api.create!()
 

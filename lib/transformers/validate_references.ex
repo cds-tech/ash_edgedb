@@ -1,4 +1,4 @@
-defmodule AshPostgres.Transformers.ValidateReferences do
+defmodule AshEdgeDB.Transformers.ValidateReferences do
   @moduledoc false
   use Spark.Dsl.Transformer
   alias Spark.Dsl.Transformer
@@ -7,7 +7,7 @@ defmodule AshPostgres.Transformers.ValidateReferences do
 
   def transform(dsl) do
     dsl
-    |> AshPostgres.DataLayer.Info.references()
+    |> AshEdgeDB.DataLayer.Info.references()
     |> Enum.each(fn reference ->
       unless Ash.Resource.Info.relationship(dsl, reference.relationship) do
         raise Spark.Error.DslError,

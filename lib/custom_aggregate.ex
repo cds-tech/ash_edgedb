@@ -1,4 +1,4 @@
-defmodule AshPostgres.CustomAggregate do
+defmodule AshEdgeDB.CustomAggregate do
   @moduledoc """
   A custom aggregate implementation for ecto.
   """
@@ -20,7 +20,7 @@ defmodule AshPostgres.CustomAggregate do
 
   defmacro __using__(_) do
     quote do
-      @behaviour AshPostgres.CustomAggregate
+      @behaviour AshEdgeDB.CustomAggregate
     end
   end
 end

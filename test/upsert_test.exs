@@ -1,6 +1,6 @@
-defmodule AshPostgres.Test.UpsertTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, Post}
+defmodule AshEdgeDB.Test.UpsertTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, Post}
 
   require Ash.Query
 

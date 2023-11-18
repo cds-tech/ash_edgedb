@@ -1,4 +1,4 @@
-defmodule AshPostgres.Test.Point do
+defmodule AshEdgeDB.Test.Point do
   @moduledoc false
   use Ash.Type
 

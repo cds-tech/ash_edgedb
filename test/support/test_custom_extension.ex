@@ -1,7 +1,7 @@
-defmodule AshPostgres.TestCustomExtension do
+defmodule AshEdgeDB.TestCustomExtension do
   @moduledoc false
 
-  use AshPostgres.CustomExtension, name: "demo-functions", latest_version: 1
+  use AshEdgeDB.CustomExtension, name: "demo-functions", latest_version: 1
 
   @impl true
   def install(0) do

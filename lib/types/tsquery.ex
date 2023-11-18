@@ -1,4 +1,4 @@
-defmodule AshPostgres.Tsquery do
+defmodule AshEdgeDB.Tsquery do
   @moduledoc """
   A thin wrapper around `:string` for working with tsquery types in calculations.
 

@@ -1,6 +1,6 @@
-defmodule AshPostgres.CalculationTest do
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Account, Api, Author, Comment, Organization, Post, Profile, User}
+defmodule AshEdgeDB.CalculationTest do
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Account, Api, Author, Comment, Organization, Post, Profile, User}
 
   require Ash.Query
   import Ash.Expr
@@ -598,7 +598,7 @@ defmodule AshPostgres.CalculationTest do
       })
       |> Api.create!()
 
-    assert %AshPostgres.Test.Money{} =
+    assert %AshEdgeDB.Test.Money{} =
              Post
              |> Ash.Changeset.new(%{title: "match", price: 10_024})
              |> Ash.Changeset.manage_relationship(:author, author, type: :append_and_remove)
@@ -606,7 +606,7 @@ defmodule AshPostgres.CalculationTest do
              |> Api.load!(:calc_returning_json)
              |> Map.get(:calc_returning_json)
 
-    assert [%AshPostgres.Test.Money{}] =
+    assert [%AshEdgeDB.Test.Money{}] =
              author
              |> Api.load!(posts: :calc_returning_json)
              |> Map.get(:posts)

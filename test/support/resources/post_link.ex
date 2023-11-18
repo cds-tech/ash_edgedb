@@ -1,11 +1,11 @@
-defmodule AshPostgres.Test.PostLink do
+defmodule AshEdgeDB.Test.PostLink do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table "post_links"
-    repo AshPostgres.TestRepo
+    repo AshEdgeDB.TestRepo
   end
 
   actions do
@@ -24,12 +24,12 @@ defmodule AshPostgres.Test.PostLink do
   end
 
   relationships do
-    belongs_to :source_post, AshPostgres.Test.Post do
+    belongs_to :source_post, AshEdgeDB.Test.Post do
       allow_nil?(false)
       primary_key?(true)
     end
 
-    belongs_to :destination_post, AshPostgres.Test.Post do
+    belongs_to :destination_post, AshEdgeDB.Test.Post do
       allow_nil?(false)
       primary_key?(true)
     end

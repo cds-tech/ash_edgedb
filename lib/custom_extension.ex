@@ -1,4 +1,4 @@
-defmodule AshPostgres.CustomExtension do
+defmodule AshEdgeDB.CustomExtension do
   @moduledoc """
   A custom extension implementation.
   """
@@ -9,7 +9,7 @@ defmodule AshPostgres.CustomExtension do
 
   defmacro __using__(name: name, latest_version: latest_version) do
     quote do
-      @behaviour AshPostgres.CustomExtension
+      @behaviour AshEdgeDB.CustomExtension
 
       @extension_name unquote(name)
       @extension_latest_version unquote(latest_version)

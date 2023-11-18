@@ -1,11 +1,11 @@
-defmodule AshPostgres.MigrationGenerator.Phase do
+defmodule AshEdgeDB.MigrationGenerator.Phase do
   @moduledoc false
 
   defmodule Create do
     @moduledoc false
     defstruct [:table, :schema, :multitenancy, operations: [], commented?: false]
 
-    import AshPostgres.MigrationGenerator.Operation.Helper, only: [as_atom: 1]
+    import AshEdgeDB.MigrationGenerator.Operation.Helper, only: [as_atom: 1]
 
     def up(%{schema: schema, table: table, operations: operations, multitenancy: multitenancy}) do
       if multitenancy.strategy == :context do
@@ -46,7 +46,7 @@ defmodule AshPostgres.MigrationGenerator.Phase do
     @moduledoc false
     defstruct [:schema, :table, :multitenancy, operations: [], commented?: false]
 
-    import AshPostgres.MigrationGenerator.Operation.Helper, only: [as_atom: 1]
+    import AshEdgeDB.MigrationGenerator.Operation.Helper, only: [as_atom: 1]
 
     def up(%{table: table, schema: schema, operations: operations, multitenancy: multitenancy}) do
       body =

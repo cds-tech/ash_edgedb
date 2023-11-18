@@ -1,11 +1,11 @@
-defmodule AshPostgres.Test.Rating do
+defmodule AshEdgeDB.Test.Rating do
   @moduledoc false
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     polymorphic?(true)
-    repo AshPostgres.TestRepo
+    repo AshEdgeDB.TestRepo
   end
 
   actions do

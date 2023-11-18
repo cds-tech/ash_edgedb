@@ -1,4 +1,4 @@
-defmodule AshPostgres.DataLayer.Info do
+defmodule AshEdgeDB.DataLayer.Info do
   @moduledoc "Introspection functions for "
 
   alias Spark.Dsl.Extension

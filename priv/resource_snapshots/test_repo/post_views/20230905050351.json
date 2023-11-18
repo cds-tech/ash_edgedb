@@ -33,7 +33,7 @@
   ],
   "table": "post_views",
   "hash": "45E84815BD6E5B9617B491C57A429F210D98AE37428AC7C210B2E9D6AEA27DB3",
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "schema": null,
   "check_constraints": [],
   "identities": [],

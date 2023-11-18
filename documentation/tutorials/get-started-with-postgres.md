@@ -4,10 +4,10 @@
 
 In this guide we will:
 
-1. Setup AshPostgres, which includes setting up [Ecto](https://hexdocs.pm/ecto/Ecto.html)
-2. Add AshPostgres to the resources created in [the Ash getting started guide](https://hexdocs.pm/ash/get-started.html)
-3. Show how the various features of AshPostgres can help you work quickly and cleanly against a postgres database
-4. Highlight some of the more advanced features you can use when using AshPostgres.
+1. Setup AshEdgeDB, which includes setting up [Ecto](https://hexdocs.pm/ecto/Ecto.html)
+2. Add AshEdgeDB to the resources created in [the Ash getting started guide](https://hexdocs.pm/ash/get-started.html)
+3. Show how the various features of AshEdgeDB can help you work quickly and cleanly against a postgres database
+4. Highlight some of the more advanced features you can use when using AshEdgeDB.
 5. Point you to additional resources you may need on your journey
 
 ## Things you may want to read
@@ -21,31 +21,31 @@ In this guide we will:
 
 ## Steps
 
-### Add AshPostgres
+### Add AshEdgeDB
 
-Add the `:ash_postgres` dependency to your application
+Add the `:ash_edgedb` dependency to your application
 
-`{:ash_postgres, "~> 1.3.6"}`
+`{:ash_edgedb, "~> 1.3.6"}`
 
-Add `:ash_postgres` to your `.formatter.exs` file
+Add `:ash_edgedb` to your `.formatter.exs` file
 
 ```elixir
 [
-  # import the formatter rules from `:ash_postgres`
-  import_deps: [..., :ash_postgres],
+  # import the formatter rules from `:ash_edgedb`
+  import_deps: [..., :ash_edgedb],
   inputs: [...]
 ]
 ```
 
 ### Create and configure your Repo
 
-Create `lib/helpdesk/repo.ex` with the following contents. `AshPostgres.Repo` is a thin wrapper around `Ecto.Repo`, so see their documentation for how to use it if you need to use it directly. For standard Ash usage, all you will need to do is configure your resources to use your repo.
+Create `lib/helpdesk/repo.ex` with the following contents. `AshEdgeDB.Repo` is a thin wrapper around `Ecto.Repo`, so see their documentation for how to use it if you need to use it directly. For standard Ash usage, all you will need to do is configure your resources to use your repo.
 
 ```elixir
 # in lib/helpdesk/repo.ex
 
 defmodule Helpdesk.Repo do
-  use AshPostgres.Repo, otp_app: :helpdesk
+  use AshEdgeDB.Repo, otp_app: :helpdesk
 end
 ```
 
@@ -147,15 +147,15 @@ And finally, add the repo to your application
     ...
 ```
 
-### Add AshPostgres to our resources
+### Add AshEdgeDB to our resources
 
-Now we can add the data layer to our resources. The basic configuration for a resource requires the `d:AshPostgres.postgres|table` and the `d:AshPostgres.postgres|repo`.
+Now we can add the data layer to our resources. The basic configuration for a resource requires the `d:AshEdgeDB.postgres|table` and the `d:AshEdgeDB.postgres|repo`.
 
 ```elixir
 # in lib/helpdesk/support/resources/ticket.ex
 
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table "tickets"
@@ -167,7 +167,7 @@ Now we can add the data layer to our resources. The basic configuration for a re
 # in lib/helpdesk/support/resources/representative.ex
 
   use Ash.Resource,
-    data_layer: AshPostgres.DataLayer
+    data_layer: AshEdgeDB.DataLayer
 
   postgres do
     table "representatives"
@@ -177,25 +177,25 @@ Now we can add the data layer to our resources. The basic configuration for a re
 
 ### Create the database and tables
 
-First, we'll create the database with `mix ash_postgres.create`.
+First, we'll create the database with `mix ash_edgedb.create`.
 
-Then we will generate database migrations. This is one of the many ways that AshPostgres can save time and reduce complexity.
+Then we will generate database migrations. This is one of the many ways that AshEdgeDB can save time and reduce complexity.
 
 ```bash
-mix ash_postgres.generate_migrations --name add_tickets_and_representatives
+mix ash_edgedb.generate_migrations --name add_tickets_and_representatives
 ```
 
 If you are unfamiliar with database migrations, it is a good idea to get a rough idea of what they are and how they work. See the links at the bottom of this guide for more. A rough overview of how migrations work is that each time you need to make changes to your database, they are saved as small, reproducible scripts that can be applied in order. This is necessary both for clean deploys as well as working with multiple developers making changes to the structure of a single database.
 
-Typically, you need to write these by hand. AshPostgres, however, will store snapshots each time you run the command to generate migrations and will figure out what migrations need to be created.
+Typically, you need to write these by hand. AshEdgeDB, however, will store snapshots each time you run the command to generate migrations and will figure out what migrations need to be created.
 
 You should always look at the generated migrations to ensure that they look correct. Do so now by looking at the generated file in `priv/repo/migrations`.
 
 Finally, we will create the local database and apply the generated migrations:
 
 ```bash
-mix ash_postgres.create
-mix ash_postgres.migrate
+mix ash_edgedb.create
+mix ash_edgedb.migrate
 ```
 
 ### Try it out
@@ -229,7 +229,7 @@ for i <- 0..5 do
 end
 ```
 
-And now we can read that data. You should see some debug logs that show the sql queries AshPostgres is generating.
+And now we can read that data. You should see some debug logs that show the sql queries AshEdgeDB is generating.
 
 ```elixir
 require Ash.Query
@@ -338,10 +338,10 @@ Take a look at the DSL documentation for more information on what you can config
 
 ### What next?
 
-- Check out the data layer docs: `AshPostgres.DataLayer`
+- Check out the data layer docs: `AshEdgeDB.DataLayer`
 
-- [Ecto's documentation](https://hexdocs.pm/ecto/Ecto.html). AshPostgres (and much of Ash itself) is made possible by the amazing Ecto. If you find yourself looking for escape hatches when using Ash or ways to work directly with your database, you will want to know how Ecto works. Ash and AshPostgres intentionally do not hide Ecto, and in fact encourages its use whenever you need an escape hatch.
+- [Ecto's documentation](https://hexdocs.pm/ecto/Ecto.html). AshEdgeDB (and much of Ash itself) is made possible by the amazing Ecto. If you find yourself looking for escape hatches when using Ash or ways to work directly with your database, you will want to know how Ecto works. Ash and AshEdgeDB intentionally do not hide Ecto, and in fact encourages its use whenever you need an escape hatch.
 
-- [Postgres' documentation](https://www.postgresql.org/docs/). Although AshPostgres makes things a lot easier, you generally can't get away with not understanding the basics of postgres and SQL.
+- [Postgres' documentation](https://www.postgresql.org/docs/). Although AshEdgeDB makes things a lot easier, you generally can't get away with not understanding the basics of postgres and SQL.
 
-- [Ecto's Migration documentation](https://hexdocs.pm/ecto_sql/Ecto.Migration.html) read more about migrations. Even with the ash_postgres migration generator, you will very likely need to modify your own migrations some day.
+- [Ecto's Migration documentation](https://hexdocs.pm/ecto_sql/Ecto.Migration.html) read more about migrations. Even with the ash_edgedb migration generator, you will very likely need to modify your own migrations some day.

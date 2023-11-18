@@ -1,4 +1,4 @@
-defmodule AshPostgres.Tsvector do
+defmodule AshEdgeDB.Tsvector do
   @moduledoc """
   A thin wrapper around `:string` for working with tsvector types in calculations.
 

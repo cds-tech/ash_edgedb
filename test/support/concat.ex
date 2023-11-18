@@ -1,4 +1,4 @@
-defmodule AshPostgres.Test.Concat do
+defmodule AshEdgeDB.Test.Concat do
   @moduledoc false
   use Ash.Calculation
   require Ash.Query

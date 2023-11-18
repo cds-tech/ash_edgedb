@@ -103,10 +103,7 @@
     {
       "default": "nil",
       "size": null,
-      "type": [
-        "array",
-        "float"
-      ],
+      "type": ["array", "float"],
       "source": "point",
       "references": null,
       "allow_nil?": true,
@@ -238,14 +235,11 @@
   ],
   "table": "posts",
   "hash": "B039FC2340F75D92FE19FC2E8682AAAE08D942D413D981CC61ECA1FE8EBCCFF8",
-  "repo": "Elixir.AshPostgres.TestRepo",
+  "repo": "Elixir.AshEdgeDB.TestRepo",
   "identities": [
     {
       "name": "uniq_one_and_two",
-      "keys": [
-        "uniq_one",
-        "uniq_two"
-      ],
+      "keys": ["uniq_one", "uniq_two"],
       "base_filter": "type = 'sponsored'",
       "index_name": "posts_uniq_one_and_two_index"
     }
@@ -261,9 +255,7 @@
     {
       "name": "price_must_be_positive",
       "check": "price > 0",
-      "attribute": [
-        "price"
-      ],
+      "attribute": ["price"],
       "base_filter": "type = 'sponsored'"
     }
   ],
@@ -274,10 +266,7 @@
       "table": null,
       "include": null,
       "prefix": null,
-      "fields": [
-        "uniq_custom_one",
-        "uniq_custom_two"
-      ],
+      "fields": ["uniq_custom_one", "uniq_custom_two"],
       "where": null,
       "unique": true,
       "concurrently": true,

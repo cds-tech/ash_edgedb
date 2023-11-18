@@ -1,7 +1,7 @@
-defmodule AshPostgres.Test.PrimaryKeyTest do
+defmodule AshEdgeDB.Test.PrimaryKeyTest do
   @moduledoc false
-  use AshPostgres.RepoCase, async: false
-  alias AshPostgres.Test.{Api, IntegerPost, Post, PostView}
+  use AshEdgeDB.RepoCase, async: false
+  alias AshEdgeDB.Test.{Api, IntegerPost, Post, PostView}
 
   require Ash.Query
 
