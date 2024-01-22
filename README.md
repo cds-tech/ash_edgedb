@@ -1,3 +1,5 @@
+**WIP**: This is not ready for use at all, very much work in progress.
+
 # AshEdgeDB
 
 ![Elixir CI](https://github.com/ash-project/ash_edgedb/workflows/Elixir%20CI/badge.svg)

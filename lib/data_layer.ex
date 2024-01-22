@@ -1,5 +1,4 @@
 defmodule AshEdgeDB.DataLayer do
-
   alias Ash.Filter
   alias Ash.Query.{BooleanExpression, Not, Ref}
 
@@ -83,7 +82,7 @@ defmodule AshEdgeDB.DataLayer do
   def can?(_, :expression_calculation), do: false
   def can?(_, :expression_calculation_sort), do: false
   def can?(_, :create), do: false
-  def can?(_, :select), do: false
+  def can?(_, :select), do: true
   def can?(_, :read), do: false
 
   def can?(resource, action) when action in ~w[update destroy]a, do: false
@@ -1837,11 +1836,7 @@ defmodule AshEdgeDB.DataLayer do
   @impl true
   def select(query, select, resource) do
     query = default_bindings(query, resource)
-
-    {:ok,
-     from(row in query,
-       select: struct(row, ^Enum.uniq(select))
-     )}
+    {:ok, from(row in query, select: struct(row, ^Enum.uniq(select)))}
   end
 
   @impl true
